@@ -12,7 +12,11 @@ random.seed(200)
 
 tab1, tab2, tab3 = st.tabs(["Visualizing Qualitative Data", "Visualizing Quantitative Data", "Misleading Visualizations"])
 
+
 #### Build Streamlit page
+st.set_page_config(
+    page_title="Chapter 2 Notes"
+)
 
 with tab1:
     bqual.build_qualitative_tab()

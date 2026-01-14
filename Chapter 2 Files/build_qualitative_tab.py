@@ -33,7 +33,7 @@ def build_qualitative_tab():
 
 
     st.title("Chapter 2: Organizing and Summarizing Data")
-    st.header("Qualitative Data Visualizations")
+    st.header("Part 1: Qualitative Data Visualizations")
     st.text("When presented with qualitative data like categories, you can get frequency tables to get a count of each "
             "category and try to draw some conclusions about your data. Namely, you can make bar charts and pie charts "
             "from either the frequencies or relative frequencies. Here's what that might look like.")

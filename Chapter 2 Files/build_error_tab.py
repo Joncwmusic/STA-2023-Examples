@@ -18,8 +18,9 @@ def build_error_tab():
 
 
     st.title("Chapter 2: Organizing and Summarizing Data")
-    st.header("Bias in Visualizations")
-    st.text("")
+    st.header("Part 3: Bias in Visualizations")
+    st.text("On occassion, or rather, all the time. People are using data to push some kind of narrative or agenda. "
+            "You as the interpreter of said data are responsible for ")
 
     st.text("*Data is generated randomly and not indicative of an actual sample or population")
 

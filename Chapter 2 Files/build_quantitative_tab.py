@@ -5,6 +5,7 @@ import plotly.express as px
 import plotly.io as pio
 pio.templates.default = "plotly"
 import math
+import datetime as dt
 
 
 # Qualitative Data
@@ -14,9 +15,10 @@ def build_quantitative_tab():
     messy_data_list_only_pos = [max(x, 0) for x in messy_data_list]
     discrete_data_list = [min(x,20) for x in messy_data_list_only_pos]
 
+    time_series_dict = {dt.date(2025, 1, 1) + dt.timedelta(days=i): math.sin((i-90)*math.pi/365) for i in range(365)}
 
     st.title("Chapter 2: Organizing and Summarizing Data")
-    st.header("Quantitative Data Visualizations")
+    st.header("Part 2: Quantitative Data Visualizations")
     st.text("When presented with quantitative data, you can still get frequency tables for discrete values. "
             "it gets more complicated when you have continuous variables since you may have to bucket "
             "that data in order to get simple and actionable information without staring at 1000 bars")
@@ -56,7 +58,7 @@ def build_quantitative_tab():
             "extra steps to simplify these values.")
     st.dataframe(continuous_data_list)
 
-    st.header("Classes")
+    st.header("Classes and Histograms with Continuous Data")
     st.text("Classes are evenly sized 'buckets' to organize data into. In this case we may want to define a class size "
             "of let's say 10 buckets. There is a simple formula for getting our class sizes.")
     st.latex(r'Class Size \approx \dfrac{Max Observation - Min Observation}{Number Of Classes}')
@@ -69,8 +71,12 @@ def build_quantitative_tab():
 
     hist_chart_fig_continuous = px.histogram(continuous_data_list, nbins = new_class_size)
 
-    st.text(str(new_class_size))
     st.plotly_chart(hist_chart_fig_continuous)
+
+    st.header("Time Series Data")
+    st.text("Often times, you'll see data monitored over time ")
+
+
 
 # continuous_data_list = [random.gauss(mu=70, sigma=8) for i in range(200)]
 # discrete_data_list = [random.binomialvariate() for i in range(200)]
