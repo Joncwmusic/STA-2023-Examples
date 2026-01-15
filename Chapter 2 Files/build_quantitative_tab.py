@@ -15,7 +15,8 @@ def build_quantitative_tab():
     messy_data_list_only_pos = [max(x, 0) for x in messy_data_list]
     discrete_data_list = [min(x,20) for x in messy_data_list_only_pos]
 
-    time_series_dict = {dt.date(2025, 1, 1) + dt.timedelta(days=i): math.sin((i-90)*math.pi/365) for i in range(365)}
+    time_series_dict = {dt.date(2024, 1, 1) + dt.timedelta(days=i): 80+random.gauss(mu=0, sigma=7)+10*math.sin(2*(i-120)*math.pi/365) for i in range(730)}
+    print(time_series_dict)
 
     st.title("Chapter 2: Organizing and Summarizing Data")
     st.header("Part 2: Quantitative Data Visualizations")
@@ -74,11 +75,13 @@ def build_quantitative_tab():
     st.plotly_chart(hist_chart_fig_continuous)
 
     st.header("Time Series Data")
-    st.text("Often times, you'll see data monitored over time ")
+    st.text("Often times, you'll see data monitored over time. In this case we'd call a series of values over these "
+            "time steps time series. Often times analyzing a time series is for forecasting and identifying trends, "
+            " seasonality, or signals that would hint at association or causality.")
 
+    st.dataframe(time_series_dict)
+    time_series_df = pd.DataFrame(time_series_dict.values(), index = time_series_dict.keys(), columns=['Temperature'])
 
-
-# continuous_data_list = [random.gauss(mu=70, sigma=8) for i in range(200)]
-# discrete_data_list = [random.binomialvariate() for i in range(200)]
-# print(continuous_data_list)
-# print(discrete_data_list)
+    st.header("Time Series Visualization")
+    time_series_chart = px.line(time_series_df, x=time_series_df.index, y='Temperature')
+    st.plotly_chart(time_series_chart)

@@ -15,7 +15,6 @@ def build_qualitative_tab():
     cat_data_list = [label_dict[item] for item in data_list]
 
     raw_df = pd.DataFrame(data=cat_data_list, columns=["Party Affiliation"])
-    print(raw_df)
     summarized_df = raw_df.groupby(["Party Affiliation"]).size().to_frame('Count')
 
     relative_freq_df = summarized_df.copy()
@@ -24,9 +23,9 @@ def build_qualitative_tab():
 
     summarized_df = summarized_df.reset_index()
     relative_freq_df = relative_freq_df.reset_index()
-
-    print(summarized_df)
-    print(relative_freq_df)
+    #
+    # print(summarized_df)
+    # print(relative_freq_df)
 
     num_data_list = [round(random.gauss(mu=5, sigma=2), 1) for i in range(200)]
     skewed_data_list = [x*1.1 for x in num_data_list if x > 4]
