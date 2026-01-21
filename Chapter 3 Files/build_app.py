@@ -12,16 +12,16 @@ tab1, tab2, tab3, tab4, tab5 = st.tabs(["Measures of Central Tendency", "Measure
 
 #### Build Streamlit page
 st.set_page_config(
-    page_title="Chapter 2 Notes"
+    page_title="Chapter 3 Notes"
 )
 
 with tab1:
     bct.build_central_tendency_tab()
 with tab2:
-    pass
+    st.title("Section 2")
 with tab3:
-    pass
+    st.title("Section 3")
 with tab4:
-    pass
+    st.title("Section 4")
 with tab5:
-    pass
+    st.title("Section 5")
