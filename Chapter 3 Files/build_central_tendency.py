@@ -13,7 +13,7 @@ def get_median(numlist):
         return numlist[(len(numlist)+1)/2]
 
 
-def build_central_tendency_tab(user_string):
+def build_central_tendency_tab(user_string = "1, 2, 3, 4, 5"):
     example_data = [4, 7, 10, 12, 15, 17, 19, 20, 21, 25]
 
     st.title("Measures of Centeral Tendency")
