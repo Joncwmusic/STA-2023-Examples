@@ -15,8 +15,7 @@ def build_quantitative_tab():
     messy_data_list_only_pos = [max(x, 0) for x in messy_data_list]
     discrete_data_list = [min(x,20) for x in messy_data_list_only_pos]
 
-    time_series_dict = {dt.date(2024, 1, 1) + dt.timedelta(days=i): 80+random.gauss(mu=0, sigma=7)+10*math.sin(2*(i-120)*math.pi/365) for i in range(730)}
-    print(time_series_dict)
+    time_series_dict = {dt.date(2024, 1, 1) + dt.timedelta(days=i): 80+random.gauss(mu=0, sigma=7)+10*math.sin(2*(i-120)*math.pi/365) for i in range(365)}
 
     st.title("Chapter 2: Organizing and Summarizing Data")
     st.header("Part 2: Quantitative Data Visualizations")
