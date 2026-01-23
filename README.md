@@ -7,6 +7,8 @@ This is loosely based off of the text Fundamentals of Statistics: Informed Decis
 
 ### Chapter 2: Summarizing Data Visually
 
+[Chapter 2 Streamlit Page](https://sta-2023-examples-chapter-2.streamlit.app/)
+
 ### Chapter 3: Summary Statistics and Box Plots
 
 ### Chapter 4: Correlation and Regression
