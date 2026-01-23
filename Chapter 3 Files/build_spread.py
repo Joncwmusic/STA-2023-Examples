@@ -1,35 +1,24 @@
 import streamlit as st
 import pandas as pd
 import plotly.express as px
+import build_central_tendency as bct
 
-def get_arithmetic_mean(numlist):
-    return sum(numlist)/len(numlist)
-
-
-def string_to_list(numstring):
-    return [float(x) for x in numstring.split(',')]
-
-
-def get_median(numlist):
-    numlist.sort()
-    if len(numlist)%2 == 0:
-        return 0.5*(numlist[int((len(numlist)/2) - 1)]+ numlist[int(len(numlist)/2)])
-    else:
-        return numlist[int((len(numlist)-1)/2)]
+def get_range(numlist):
+    return max(numlist) - min(numlist)
+def get_variance(numlist):
+    sum_error = 0
+    for item in numlist:
+        sum_error = sum_error + (item - bct.get_arithmetic_mean(numlist))**2
 
 
-def get_mode(numlist):
-    mode = max(set(numlist), key=numlist.count)
-    if mode == 1:
-        return None
-    else:
-        return mode
+def get_standard_deviation():
+    return None
 
 
-def build_central_tendency_tab():
+def build_spread_tab():
     example_data = [4, 7, 10, 12, 12, 12, 15, 16, 17, 17, 18, 19, 20, 21, 25]
 
-    st.title("Measures of Central Tendency")
+    st.title("Measures of Spread")
     st.header("Arithmetic Mean (Average)")
     st.text("The arithmetic mean is a simple sum of all the data points after which you just have to divide that "
             "sum by the number of data points to get your final number. Regardless of if you're measuring the mean "
@@ -60,16 +49,16 @@ def build_central_tendency_tab():
     st.text("Mean: ")
     st.latex(mean_latex_string)
 
-    st.text("Median: " + str(get_median(example_data)))
+    st.text("Median: " + str(bct.get_median(example_data)))
 
-    st.text("Mode: " + str(get_mode(example_data)))
+    st.text("Mode: " + str(bct.get_mode(example_data)))
 
     st.header("Now You Try")
     st.text("input your dataset here (make sure to separate each number with a comma:")
     user_data_string = st.text_input("Your Data", "Input your number list here")
 
     try:
-        user_data_list = string_to_list(user_data_string)
+        user_data_list = bct.string_to_list(user_data_string)
 
         user_numerator_list = []
         user_denominator = str(len(user_data_list))
@@ -80,13 +69,13 @@ def build_central_tendency_tab():
             else:
                 user_numerator_list.append(str(num))
         user_mean_latex_string = r"\dfrac{" + "".join(user_numerator_list) + "}{" + user_denominator + "} = " + str(
-            get_arithmetic_mean(user_data_list))
+            bct.get_arithmetic_mean(user_data_list))
 
         st.text("Mean: ")
         st.latex(user_mean_latex_string)
 
-        st.text("Median: " + str(get_median(user_data_list)))
+        st.text("Median: " + str(bct.get_median(user_data_list)))
 
-        st.text("Mode: " + str(get_mode(user_data_list)))
+        st.text("Mode: " + str(bct.get_mode(user_data_list)))
     except:
         st.text("It seems the number list you've input is invalid. Please input a comma separated number list.")
