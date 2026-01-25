@@ -6,6 +6,7 @@ import plotly.io as pio
 pio.templates.default = "plotly"
 random.seed(300)
 import build_central_tendency as bct
+import build_spread as bst
 
 tab1, tab2, tab3, tab4, tab5 = st.tabs(["Measures of Central Tendency", "Measures of Spread", "Grouped Data", "Outliers", "Five Number Summary"])
 
@@ -18,7 +19,7 @@ st.set_page_config(
 with tab1:
     bct.build_central_tendency_tab()
 with tab2:
-    st.title("Section 2")
+    bst.build_spread_tab()
 with tab3:
     st.title("Section 3")
 with tab4:
