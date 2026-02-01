@@ -2,28 +2,7 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-def get_arithmetic_mean(numlist):
-    return sum(numlist)/len(numlist)
-
-
-def string_to_list(numstring):
-    return [float(x) for x in numstring.split(',')]
-
-
-def get_median(numlist):
-    numlist.sort()
-    if len(numlist)%2 == 0:
-        return 0.5*(numlist[int((len(numlist)/2) - 1)]+ numlist[int(len(numlist)/2)])
-    else:
-        return numlist[int((len(numlist)-1)/2)]
-
-
-def get_mode(numlist):
-    mode = max(set(numlist), key=numlist.count)
-    if mode == 1:
-        return None
-    else:
-        return mode
+import util_functions as uf
 
 
 def build_central_tendency_tab():
@@ -55,21 +34,21 @@ def build_central_tendency_tab():
             numerator_list.append('+')
         else:
             numerator_list.append(str(num))
-    mean_latex_string = r"\dfrac{" + "".join(numerator_list) + "}{" + denominator + "} = " + str(get_arithmetic_mean(example_data))
+    mean_latex_string = r"\dfrac{" + "".join(numerator_list) + "}{" + denominator + "} = " + str(uf.get_arithmetic_mean(example_data))
 
     st.text("Mean: ")
     st.latex(mean_latex_string)
 
-    st.text("Median: " + str(get_median(example_data)))
+    st.text("Median: " + str(uf.get_median(example_data)))
 
-    st.text("Mode: " + str(get_mode(example_data)))
+    st.text("Mode: " + str(uf.get_mode(example_data)))
 
     st.header("Now You Try")
     st.text("input your dataset here (make sure to separate each number with a comma:")
     user_data_string = st.text_input("Your Data", "Input your number list here")
 
     try:
-        user_data_list = string_to_list(user_data_string)
+        user_data_list = uf.string_to_list(user_data_string)
 
         user_numerator_list = []
         user_denominator = str(len(user_data_list))
@@ -80,13 +59,59 @@ def build_central_tendency_tab():
             else:
                 user_numerator_list.append(str(num))
         user_mean_latex_string = r"\dfrac{" + "".join(user_numerator_list) + "}{" + user_denominator + "} = " + str(
-            get_arithmetic_mean(user_data_list))
+            uf.get_arithmetic_mean(user_data_list))
 
         st.text("Mean: ")
         st.latex(user_mean_latex_string)
 
-        st.text("Median: " + str(get_median(user_data_list)))
+        st.text("Median: " + str(uf.get_median(user_data_list)))
 
-        st.text("Mode: " + str(get_mode(user_data_list)))
+        st.text("Mode: " + str(uf.get_mode(user_data_list)))
     except:
         st.text("It seems the number list you've input is invalid. Please input a comma separated number list.")
+
+
+
+    st.header("Grouped Data")
+    st.text("Grouped data works differently. We approximate the mean by using class midpoints and multiply each "
+            "frequency by the midpoints and divide by the sum of all the frequencies. You can think of this as a weighted mean")
+
+    grouped_data = {"class":["0-49.99","50-99.99", "100-149.99", "150-199.99", "200-249.99", "250-299.99"]
+        , "midpoint":[25, 75, 125, 175, 225, 275], "frequency":[5, 9, 12, 15, 5, 2]}
+
+    grouped_data_df = pd.DataFrame(grouped_data)
+    grouped_data_df["x_i*f_i"] = grouped_data_df["midpoint"]*grouped_data_df["frequency"]
+
+    st.dataframe(grouped_data_df)
+
+    st.text("From here it's a matter of adding all of the items in the product column (x_i*f_i) and dividing by the"
+            " sum of the frequencies i.e.")
+
+    st.markdown(r'''$$ \mu = \dfrac{\sum x_i f_i}{\sum f_i} = \dfrac{125+675+1500+2625+1125+550}{5+9+12+15+5+2} = \dfrac{6600}{48} = 137.5$$''')
+    st.header("Formulas")
+    st.markdown(r"""
+
+Population Mean and Standard Deviation:
+
+$$\mu = \dfrac{\sum x_i}{N} \hspace{50pt} \sigma = \sqrt{\dfrac{\sum (x_i - \mu ) ^2}{N}}$$
+
+Sample Mean and Standard Deviation:
+
+$$\bar{x} = \dfrac{\sum x_i}{N} \hspace{50pt} s = \sqrt{\dfrac{\sum (x_i - \bar{x}) ^2}{N -1}}$$
+
+Grouped Data Population Mean and Standard Deviation:
+
+$$ \mu = \dfrac{\sum x_i f_i}{\sum f_i} \hspace{50pt} \sigma = \sqrt{\dfrac{\sum (x_i - \mu ) ^2f_i}{\sum f_i}}$$
+
+Grouped Data Sample Mean and Standard Deviation:
+
+$$ \bar{x} = \dfrac{\sum x_i f_i}{\sum f_i} \hspace{50pt} s = \sqrt{\dfrac{\sum (x_i - \bar{x} ) ^2f_i}{(\sum f_i) -1}}$$
+
+Weighted Mean:
+
+$$\dfrac{\sum x_i w_i}{\sum w_i}$$
+
+z-score for Data from Population and Sample:
+
+$$z=\dfrac{x-\mu}{\sigma} \hspace{50pt} z=\dfrac{x-\bar{x}}{s}$$""")
+

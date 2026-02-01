@@ -5,25 +5,7 @@ import pandas as pd
 import plotly.express as px
 import build_central_tendency as bct
 
-
-def get_range(numlist):
-    return max(numlist) - min(numlist)
-
-
-def get_variance(numlist):
-    if len(numlist) == 0:
-        st.write("The list provided is not valid for calculating the variance or standard deviation")
-        return None
-    sum_error = 0
-    for item in numlist:
-        sum_error = sum_error + (item - bct.get_arithmetic_mean(numlist))**2
-    return sum_error/len(numlist)
-
-
-def get_standard_deviation(numlist):
-    var = get_variance(numlist)
-    return math.sqrt(var)
-
+import util_functions as uf
 
 def build_spread_tab():
     example_data = [4, 7, 10, 12, 12, 12, 15, 16, 17, 17, 18, 19, 20, 21, 25]
@@ -45,17 +27,39 @@ def build_spread_tab():
             "Maybe if we compare each datapoint to the mean we can get another way to see the spread of our data."
             "and then we can add add it all up and get...")
 
-    st.text("0")
-
-
-    example_series = pd.Series(example_data, name = "data")
+    example_series = pd.Series(example_data, name="data")
     example_mean_series = pd.Series([example_series.mean() for i in example_data], name='mean')
     example_diff_series = pd.Series([x - example_series.mean() for x in example_data], name='differences')
-    example_square_series = pd.Series([(x - example_series.mean())**2 for x in example_data])
-    example_df= pd.DataFrame({'data':example_series, 'mean':example_mean_series, 'differences':example_diff_series
-                             , 'square_diff':example_square_series})
+    example_square_series = pd.Series([(x - example_series.mean()) ** 2 for x in example_data])
+
+    example_df = pd.DataFrame(
+        {'data (x_i)': example_data, 'mean (mu)': example_mean_series, 'differences (x_i - mu)': example_diff_series})
+    example_total_df = pd.DataFrame({'data (x_i)': [example_series.sum()], 'mean (mu)': [example_mean_series.sum()]
+                                        , 'differences (x_i - mu)': [example_diff_series.sum()]})
 
     st.dataframe(example_df)
+    st.dataframe(example_total_df)
+
+    st.text("0... and as it turns out if we just sum differences we will always get 0 no matter what. So what is one "
+            "to do to keep the deviations without them cancelling? The answer is to square all the values. And "
+            "when we add those values and divide by the number of data points we get something called the Variance "
+            "which is denoted with a sigma squared. If we take the square root of that value we get the standard "
+            "deviation.")
+
+    st.header("Calculating Standard Deviation By Hand.")
+    example_df_with_square = pd.DataFrame(
+        {'data (x_i)': example_data, 'mean (mu)': example_mean_series, 'differences (x_i - mu)': example_diff_series
+            , 'square_diff ((x_i-mu)^2)': example_square_series})
+    example_total_df_with_square = pd.DataFrame({'data (x_i)': [example_series.sum()], 'mean (mu)': [example_mean_series.sum()]
+                                        , 'differences (x_i - mu)': [example_diff_series.sum()],
+                                     'square_diff ((x_i-mu)^2)': [example_square_series.sum()]})
+
+    st.dataframe(example_df_with_square)
+    st.dataframe(example_total_df_with_square)
+
+    st.latex(r'''\sigma = \sqrt{\dfrac{\sum (x_i - \mu ) ^2}{N}} = \sqrt{\dfrac{432}{15}} \approx 5.55''')
+    st.latex(r'''\sigma = \sqrt{\dfrac{\sum (x_i - \mu ) ^2}{N-1}} = \sqrt{\dfrac{432}{15-1}} \approx 5.76''')
+
 
     st.write(example_square_series.sum()/len(example_data))
 
@@ -63,44 +67,31 @@ def build_spread_tab():
     st.text("The mode just refers to the most often observation. If there is no duplicate data points, we say the data "
             "set has no mode.")
 
-    # st.header("Example")
-    # st.text("So let's look at a specific data set.")
-    # st.dataframe(example_data)
-    #
-    # numerator_list = []
-    # denominator = str(len(example_data))
-    # for idx, num in enumerate(example_data):
-    #     if idx < len(example_data) - 1:
-    #         numerator_list.append(str(num))
-    #         numerator_list.append('+')
-    #     else:
-    #         numerator_list.append(str(num))
-    # mean_latex_string = r"\dfrac{" + "".join(numerator_list) + "}{" + denominator + "} = " + str(bct.get_arithmetic_mean(example_data))
-    #
-    #
-    # st.header("Now You Try")
-    # st.text("input your dataset here (make sure to separate each number with a comma:")
-    # user_data_string = st.text_input("Your Data", "Input your number list here")
-    #
-    # try:
-    #     user_data_list = bct.string_to_list(user_data_string)
-    #
-    #     user_numerator_list = []
-    #     user_denominator = str(len(user_data_list))
-    #     for idx, num in enumerate(user_data_list):
-    #         if idx < len(user_data_list) - 1:
-    #             user_numerator_list.append(str(num))
-    #             user_numerator_list.append('+')
-    #         else:
-    #             user_numerator_list.append(str(num))
-    #     user_mean_latex_string = r"\dfrac{" + "".join(user_numerator_list) + "}{" + user_denominator + "} = " + str(
-    #         bct.get_arithmetic_mean(user_data_list))
-    #
-    #     st.text("Mean: ")
-    #     st.latex(user_mean_latex_string)
-    #
-    #     st.text("Median: " + str(bct.get_median(user_data_list)))
-    #
-    #     st.text("Mode: " + str(bct.get_mode(user_data_list)))
-    # except:
-    #     st.text("It seems the number list you've input is invalid. Please input a comma separated number list.")
+    st.header("Grouped Data")
+
+    st.header("Formulas")
+    st.markdown(r"""
+
+    Population Mean and Standard Deviation:
+
+    $$\mu = \dfrac{\sum x_i}{N} \hspace{50pt} \sigma = \sqrt{\dfrac{\sum (x_i - \mu ) ^2}{N}}$$
+
+    Sample Mean and Standard Deviation:
+
+    $$\bar{x} = \dfrac{\sum x_i}{N} \hspace{50pt} s = \sqrt{\dfrac{\sum (x_i - \bar{x}) ^2}{N -1}}$$
+
+    Grouped Data Population Mean and Standard Deviation:
+
+    $$ \mu = \dfrac{\sum x_i f_i}{\sum f_i} \hspace{50pt} \sigma = \sqrt{\dfrac{\sum (x_i - \mu ) ^2f_i}{\sum f_i}}$$
+
+    Grouped Data Sample Mean and Standard Deviation:
+
+    $$ \bar{x} = \dfrac{\sum x_i f_i}{\sum f_i} \hspace{50pt} s = \sqrt{\dfrac{\sum (x_i - \bar{x} ) ^2f_i}{(\sum f_i) -1}}$$
+
+    Weighted Mean:
+
+    $$\dfrac{\sum x_i w_i}{\sum w_i}$$
+
+    z-score for Data from Population and Sample:
+
+    $$z=\dfrac{x-\mu}{\sigma} \hspace{50pt} z=\dfrac{x-\bar{x}}{s}$$""")
