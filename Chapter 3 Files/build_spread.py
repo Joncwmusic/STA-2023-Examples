@@ -62,9 +62,7 @@ def build_spread_tab():
     st.latex(r'''\sigma = \sqrt{\dfrac{\sum (x_i - \mu ) ^2}{N-1}} = \sqrt{\dfrac{432}{15-1}} \approx 5.76''')
 
 
-    st.write(example_square_series.sum()/len(example_data))
-
-    st.header("Variance and Standard Deviation")
+    st.header("Variance vs. Standard Deviation")
     st.text("The difference between variance and standard deviation is literally a square. At the end of the "
             "calculation, if we remove the step of taking the square root, we have the variance which is denoted "
             "with a sigma squared (or s squared for sample variance).")
