@@ -1,5 +1,6 @@
 import math
 
+import numpy as np
 import streamlit as st
 import pandas as pd
 import plotly.express as px
@@ -64,10 +65,46 @@ def build_spread_tab():
     st.write(example_square_series.sum()/len(example_data))
 
     st.header("Variance and Standard Deviation")
-    st.text("The mode just refers to the most often observation. If there is no duplicate data points, we say the data "
-            "set has no mode.")
+    st.text("The difference between variance and standard deviation is literally a square. At the end of the "
+            "calculation, if we remove the step of taking the square root, we have the variance which is denoted "
+            "with a sigma squared (or s squared for sample variance).")
 
     st.header("Grouped Data")
+
+    st.text("When dealing with grouped data we just apply the following formula:")
+
+    st.latex(r"""\sigma = \sqrt{\dfrac{\sum (x_i - \mu )^2 f_i}{\sum f_i}}""")
+
+    st.text("Each column represents a different step including finding the mean, finding the differences from the mean,"
+            " squaring each difference and then multiplying the frequencies before adding them up and ultimately "
+            "dividing by the sum of frequencies and taking the square root.")
+
+    grouped_data_sd = {"class": ["0-49.99", "50-99.99", "100-149.99", "150-199.99", "200-249.99", "250-299.99"]
+        , "midpoint": [25, 75, 125, 175, 225, 275], "frequency": [5, 9, 12, 15, 5, 2]
+        , "mean":[137.5, 137.5, 137.5, 137.5, 137.5, 137.5]}
+
+    grouped_total_sd = {"class": ["Total"], "midpoint": [np.nan], "frequency": [48]
+        , "mean":[137.5], "x_i-mu":["na"] ,"(x_i-mu)^2":["na"], "(x_i-mu)^2)*f_i":[197500]}
+
+    grouped_total_sd_df = pd.DataFrame(grouped_total_sd)
+
+    grouped_data_sd_df = pd.DataFrame(grouped_data_sd)
+    grouped_data_sd_df["x_i-mu"] = grouped_data_sd_df["midpoint"] - grouped_data_sd_df["mean"]
+    grouped_data_sd_df["(x_i-mu)^2"] = grouped_data_sd_df["x_i-mu"]**2
+    grouped_data_sd_df["(x_i-mu)^2)*f_i"] = grouped_data_sd_df["(x_i-mu)^2"] * grouped_data_sd_df["frequency"]
+
+    st.dataframe(grouped_data_sd_df)
+    st.dataframe(grouped_total_sd_df)
+
+    st.markdown(r"""
+    
+    $$\sigma = \sqrt{\dfrac{\sum (x_i - \mu )^2 f_i}{\sum f_i}}$$
+    
+    $$\sqrt{\dfrac{(12656.25)(5)+(3906.25)(9)+(156.25)(12)+(1406.25)(15)+(7656.25)(5)+(18906.25)(2)}{5+9+12+15+5+2}}$$
+    
+    $$\sqrt{\dfrac{197500}{48}} \approx \sqrt{4114} \approx 64.1$$""")
+
+    st.text("Keep in mind the variance is that 4114 figure under the square root.")
 
     st.header("Formulas")
     st.markdown(r"""
