@@ -11,7 +11,6 @@ import build_correlation as bc
 # import build_nonlinear_regression as bnr
 # import build_multilinear_regression as bmr
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["Correlation", "Regression", "Contingency Diagrams", "NonLinear Regression", "More than 2 Variables"])
 
 
 #### Build Streamlit page
@@ -20,6 +19,9 @@ st.set_page_config(
 )
 
 st.title("Chapter 4 Summary")
+
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["Correlation", "Regression", "Contingency Diagrams", "NonLinear Regression", "More than 2 Variables"])
+
 
 with tab1:
     bc.build_correlation()
