@@ -11,6 +11,8 @@ This is loosely based off of the text Fundamentals of Statistics: Informed Decis
 
 ### Chapter 3: Summary Statistics and Box Plots
 
+[Chapter 3 Streamlit Page](https://sta-2023-examples-chapter-3.streamlit.app/)
+
 ### Chapter 4: Correlation and Regression
 
 ### Chapter 5: Probability
