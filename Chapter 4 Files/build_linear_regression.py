@@ -38,7 +38,7 @@ def build_linear_regression():
     slope = (y_2-y_1)/(x_2-x_1)
 
     x_range_1, y_range_1 = (-20, slope*(-20-x_1)+y_1)
-    x_range_2, y_range_2 = example_point_2 = (70, slope*(70-x_2)+y_2)
+    x_range_2, y_range_2 = (70, slope*(70-x_2)+y_2)
     line_df = pd.DataFrame({"Inputs": [x_range_1, x_range_2], "Outputs": [y_range_1, y_range_2]})
 
     st.markdown(r"Those two points are $(x_1,y_1) = (" + str(x_1) + "," + str(y_1) +
@@ -73,10 +73,18 @@ def build_linear_regression():
                 "be and you must minimize those differences (technically the square of those differences because an "
                 "overestimate doesn't cancel an underestimate). Luckily we have a formula for the line that does that.")
 
+
     #### insert formula for line of best fit
-    st.markdown(r"$$ $$")
+    st.markdown(r"$$ \hat{y} = b_1 x + b_0 \hspace{50pt} b_1 = r\dfrac{s_y}{s_x} \hspace{50pt} b_0 = \bar{y}-\bar{x}b_1$$")
+
+
+    st.markdown(r"The $\hat{y}$, pronounced y hat, is the predicted value if we input anew value for x. We know our r "
+                r"value from before which is 0.884")
 
     st.plotly_chart(resid_axis)
+
+
+
     x_bar = example_df["Inputs"].mean()
     y_bar = example_df["Outputs"].mean()
     s_x = example_df["Inputs"].std()
@@ -84,13 +92,6 @@ def build_linear_regression():
 
     init_df = example_df.copy()
     init_df["x Mean"], init_df["y Mean"], init_df["x Std Dev"], init_df["y Std Dev"] = x_bar, y_bar, s_x, s_y
-
-    st.dataframe(init_df)
-
-    st.markdown(r"Now all we have to do is calculate the $(\dfrac{x_i-\bar{x}}{s_x})(\dfrac{y_i-\bar{y}}{s_y})$ part "
-                r"which we'll break out into 3 more columns namely the z scores for all the x values, "
-                r"$(\dfrac{x_i-\bar{x}}{s_x})$, the z scores for all the y values $(\dfrac{y_i-\bar{y}}{s_y})$ "
-                r"and then of course the full product.")
 
     final_df = init_df.copy()
 
@@ -105,6 +106,7 @@ def build_linear_regression():
     zx_sum = final_df["(x_i-xbar)/sx"].sum()
     zy_sum = final_df["(y_i-ybar)/sy"].sum()
     r_presum = final_df["((x_i-xbar)/sx)((y_i-ybar)/sy)"].sum()
+    reg_coeff = r_presum/89
 
 
     st.markdown("Here are the totals. the means and deviations are not summed. Also notice the z scores all sum to "
@@ -118,6 +120,51 @@ def build_linear_regression():
                 r"$r = " + str(r_presum) + r"\div 89 \approx 0.884$ ")
 
     st.dataframe(total_df)
+
+    st.markdown("Let's take a look at all the summary statistics and correlation coefficients necessary to find "
+                "the line of best fit based on our formulas.")
+    st.markdown(r"$$r = 0.884$$")
+    st.markdown(r"$$\bar{x} = " + str(x_bar) + r"$$")
+    st.markdown(r"$$\bar{y} = " + str(y_bar) + r"$$")
+    st.markdown(r"$$s_x = " + str(s_x) + r"$$")
+    st.markdown(r"$$s_y = " + str(s_y) + r"$$")
+
+    st.markdown("Using these values we can compute $b_1$ and $b_0$")
+
+    b_1 = reg_coeff*(s_y/s_x)
+    b_0 = y_bar - b_1*x_bar
+
+    st.markdown(r"$$ b_1 = r\dfrac{s_y}{s_x} = 0.884 \times \dfrac{7.75}{26.12} = 0.262 $$")
+    st.markdown(r"$$ b_0 = \bar{y}-b_1\bar{x} = -3.48 - 0.262 \times 24.5 = -9.89$$")
+
+    st.markdown("So now the final equation of our line is:")
+
+    st.markdown(r"$$\hat{y} = 2.98x -76.5$$")
+
+    tru_x_range_1, tru_y_range_1 = (-20, b_1*(-20) + b_0)
+    tru_x_range_2, tru_y_range_2 = (70, b_1*70 + b_0)
+    tru_line_df = pd.DataFrame({"Inputs": [tru_x_range_1, tru_x_range_2], "Outputs": [tru_y_range_1, tru_y_range_2]})
+
+    best_fit_ax = px.scatter(example_df, x="Inputs", y="Outputs")
+    best_fit_ax.add_trace(
+        go.Scatter(
+            x=tru_line_df["Inputs"],
+            y=tru_line_df["Outputs"],
+            mode="lines",
+            name="Best Fit Regression Line"
+        )
+    )
+
+    best_fit_ax.add_trace(
+        go.Scatter(
+            x=line_df["Inputs"],
+            y=line_df["Outputs"],
+            mode="lines",
+            name="Prior Regression Line"
+        )
+    )
+
+    st.plotly_chart(best_fit_ax)
 
     st.header("Formulas")
     st.markdown(r"Pearson Correlation Coefficient:"

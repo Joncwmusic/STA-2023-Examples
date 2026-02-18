@@ -39,6 +39,7 @@ def build_correlation():
     st.markdown(r"Okay so let's break this formula down. The first thing you need to do is find "
                 r"$s_x, s_y, \bar{x}, \bar{y}$ which are the standard deviations and means of your x and y values.")
 
+    # Calculate all the variables
     x_bar = example_df["Inputs"].mean()
     y_bar = example_df["Outputs"].mean()
     s_x = example_df["Inputs"].std()
@@ -60,21 +61,20 @@ def build_correlation():
     final_df["(y_i-ybar)/sy"] = (final_df["Outputs"] - final_df["y Mean"])/final_df["y Std Dev"]
     final_df["((x_i-xbar)/sx)((y_i-ybar)/sy)"] = final_df["(x_i-xbar)/sx"]*final_df["(y_i-ybar)/sy"]
 
-    st.dataframe(final_df)
-
     x_sum = final_df["Inputs"].sum()
     y_sum = final_df["Outputs"].sum()
     zx_sum = final_df["(x_i-xbar)/sx"].sum()
     zy_sum = final_df["(y_i-ybar)/sy"].sum()
     r_presum = final_df["((x_i-xbar)/sx)((y_i-ybar)/sy)"].sum()
 
+    st.dataframe(final_df)
 
     st.markdown("Here are the totals. the means and deviations are not summed. Also notice the z scores all sum to "
                 "basically 0. Make a note of that for later chapters.")
 
-    total_df = pd.DataFrame({"Inputs": [x_sum],"Outputs": [y_sum],"x Mean": [x_bar],"y Mean": [y_bar]
-                     , "x Std Dev": [s_x], "y Std Dev": [s_y], "(x_i-xbar)/sx": [zx_sum]
-                     , "(y_i-ybar)/sy": [zy_sum], "((x_i-xbar)/sx)((y_i-ybar)/sy)": [r_presum]})
+    total_df = pd.DataFrame({"Inputs": [x_sum], "Outputs": [y_sum], "x Mean": [x_bar], "y Mean": [y_bar]
+                                , "x Std Dev": [s_x], "y Std Dev": [s_y], "(x_i-xbar)/sx": [zx_sum]
+                                , "(y_i-ybar)/sy": [zy_sum], "((x_i-xbar)/sx)((y_i-ybar)/sy)": [r_presum]})
 
     st.markdown(r"Now just divide by the number of data points minus which in this case is 90-1 so "
                 r"$r = " + str(r_presum) + r"\div 89 \approx 0.884$ ")
