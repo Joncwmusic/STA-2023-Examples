@@ -22,7 +22,7 @@ tab1, tab2, tab3, tab4 = st.tabs(["Probability Rules", "Multiplication and Indep
 
 
 with tab1:
-    st.write("Your page is in another castle")
+    bpra.build_probability_rules_addition()
 with tab2:
     st.write("Your page is in another castle")
 with tab3:
