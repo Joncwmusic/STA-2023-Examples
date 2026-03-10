@@ -7,8 +7,7 @@ pio.templates.default = "plotly"
 random.seed(300)
 import build_probability_rules_addition as bpra
 import build_probability_rules_multiplication as bprm
-import build_combinations_and_permutations as bcap
-import build_conditional_probability as bcp
+import build_combinations_and_permutations as bcp
 
 
 #### Build Streamlit page
@@ -18,16 +17,14 @@ st.set_page_config(
 
 st.title("Chapter 5 Summary")
 
-tab1, tab2, tab3, tab4 = st.tabs(["Probability Rules", "Multiplication and Independence","Permutations and Combinations", "Conditional Probability"])
-
+tab1, tab2, tab3, tab4 = st.tabs(["Probability Rules", "Multiplication and Conditional Probability"
+                                           ,"Permutations and Combinations", "Calculator Tutorial"])
 
 with tab1:
     bpra.build_probability_rules_addition()
 with tab2:
-    st.write("Your page is in another castle")
+    bprm.build_probability_rules_multiplication()
 with tab3:
-    st.write("Your page is in another castle")
+    bcp.build_combination_permutation()
 with tab4:
     st.write("Your page is in another castle")
-# with tab5:
-#     # bmr.build_multilinear_regression()

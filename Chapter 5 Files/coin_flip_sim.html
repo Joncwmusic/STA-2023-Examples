@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <input type="number" id="n" value="1" min="1" max="10000" />
+  <button onclick="flip()">Flip</button>
+  <button onclick="reset()">Reset</button>
+  <br><br>
+  <div id="out">No flips yet.</div>
+
+  <script>
+    let H = 0, T = 0;
+
+    function flip() {
+      const n = parseInt(document.getElementById('n').value) || 1;
+      for (let i = 0; i < n; i++) Math.random() < 0.5 ? H++ : T++;
+      const total = H + T;
+      const hp = (H / total * 100).toFixed(1);
+      const tp = (T / total * 100).toFixed(1);
+      document.getElementById('out').innerHTML =
+        `Total flips: ${total}<br>` +
+        `Heads: ${H} (${hp}%)<br>` +
+        `Tails: ${T} (${tp}%)`;
+    }
+
+    function reset() {
+      H = 0; T = 0;
+      document.getElementById('n').value = 1;
+      document.getElementById('out').textContent = 'No flips yet.';
+    }
+  </script>
+</body>
+</html>

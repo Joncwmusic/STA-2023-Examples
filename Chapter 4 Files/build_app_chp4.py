@@ -9,7 +9,7 @@ import build_correlation as bc
 import build_linear_regression as blr
 import build_contingency_tables as bct
 import build_residual_analysis as bra
-# import build_nonlinear_regression as bnr
+import build_calc_notes_chp4 as bcn4
 
 
 
@@ -20,7 +20,7 @@ st.set_page_config(
 
 st.title("Chapter 4 Summary")
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["Correlation", "Regression","Regression Evaluation", "Contingency Diagrams", "More than 2 Variables"])
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["Correlation", "Regression","Regression Evaluation", "Contingency Diagrams", "Calculator"])
 
 
 with tab1:
@@ -31,5 +31,5 @@ with tab3:
     bra.build_residual_analysis()
 with tab4:
     bct.build_contingency_tables()
-# with tab5:
-#     # bmr.build_multilinear_regression()
+with tab5:
+    bcn4.build_calculator_notes()
