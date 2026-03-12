@@ -54,9 +54,14 @@ def build_contingency_tables():
     st.table(example_df)
 
     st.header("Marginal Distribution")
+    st.markdown("Depending on which dimension you care more about (dimensions being political affiliation and gender "
+                "identity in this case) you can see proportional breakdowns of each by the other dimension. In other "
+                "words you could see a a distribution of political affiliation by gender identity, or...")
 
     st.table(example_df_party_by_gender)
     st.plotly_chart(ax2)
+
+    st.markdown("...a distribution of gender identity by political affiliation")
 
     st.table(example_df_gender_by_party)
     st.plotly_chart(ax1)

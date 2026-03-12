@@ -8,6 +8,7 @@ random.seed(300)
 import build_probability_rules_addition as bpra
 import build_probability_rules_multiplication as bprm
 import build_combinations_and_permutations as bcp
+import build_calc_notes_chp5 as bcn5
 
 
 #### Build Streamlit page
@@ -27,4 +28,4 @@ with tab2:
 with tab3:
     bcp.build_combination_permutation()
 with tab4:
-    st.write("Your page is in another castle")
+    bcn5.build_calculator_notes()
