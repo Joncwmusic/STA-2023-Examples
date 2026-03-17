@@ -6,9 +6,13 @@ import random
 
 
 def build_calculator_notes():
-    st.header("How to Regression on you TI 83 and TI 84")
+    st.header("How to Probability Distribution on your TI 83 and TI 84")
 
-    st.subheader("Calculate nPr, nCr, and Factorial!")
+    st.subheader("Caluclate mean and standard deviation")
+    st.markdown("The steps for calculating mean and standard deviation are the same as calculating mean and standard "
+                "deviation for weighted data which can be found in the chapter 3 notes.")
+
+    st.subheader("Calculate Binomial Probabilities (binompdf and binomcdf)")
     st.markdown("Basically everything you need to know about calculating permutations and combinations.")
 
 
