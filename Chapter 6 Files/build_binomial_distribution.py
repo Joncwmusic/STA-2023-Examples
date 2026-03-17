@@ -54,7 +54,7 @@ class tree_node:
         self.right.build_tree(left_data, right_data, tiers - 1, left_label, right_label)
 
 
-def create_binomial_probs(num_trials, success_prob, success_label="Success", failure_label="Failure"):
+def create_binomial_probs(num_trials, success_prob, success_label="Success", failure_label="Failure", chart_lbl="main"):
     y_coordinates = []
     x_coordinates = []
     labels = []
@@ -113,7 +113,7 @@ def create_binomial_probs(num_trials, success_prob, success_label="Success", fai
         trace.line.color = "black"
         trace.line.width = 1
         fig.add_trace(line_obj.data[0])
-    st.plotly_chart(fig)
+    st.plotly_chart(fig, key=chart_lbl)
     return None
 
 
@@ -196,7 +196,7 @@ def build_binomial_distribution():
     st.subheader("Finding Mean and Standard Deviation")
     st.markdown("To calculate mean and standard deviation you just need to use n, the number of trials, and p, the "
                 "probability to calculate both of the values. They are as follows: ")
-    st.markdown(r"$$\mu_x = np \hspace{50pt} \sigma_X = \sqrt(np(1-p))$$")
+    st.markdown(r"$$\mu_x = np \hspace{50pt} \sigma_X = \sqrt{np(1-p)}$$")
 
 
 
@@ -231,5 +231,5 @@ def build_binomial_distribution():
         st.plotly_chart(user_cume_ax)
 
     st.markdown("The Probability Tree")
-    create_binomial_probs(user_trials, user_prob)
+    create_binomial_probs(user_trials, user_prob, chart_lbl="user_viz")
 
