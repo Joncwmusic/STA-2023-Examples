@@ -15,9 +15,15 @@ This is loosely based off of the text Fundamentals of Statistics: Informed Decis
 
 ### Chapter 4: Correlation and Regression
 
+[Chapter 4 Streamlit Page](https://sta-2023-examples-chapter-4.streamlit.app/)
+
 ### Chapter 5: Probability
 
+[Chapter 5 Streamlit Page](https://sta-2023-examples-chapter-5.streamlit.app/)
+
 ### Chapter 6: Binomial Distribution and other Discrete Distributions
+
+[Chapter 6 Streamlit Page](https://sta-2023-examples-chapter-6.streamlit.app/)
 
 ### Chapter 7: Normal Distribution
 
