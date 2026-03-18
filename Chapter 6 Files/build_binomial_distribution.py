@@ -84,7 +84,6 @@ def create_binomial_probs(num_trials, success_prob, success_label="Success", fai
         step = step/2
         start = start/2
 
-    print(point_pairs)
     ### getting probability powers
 
     p_powers[0] = [0]
@@ -93,7 +92,6 @@ def create_binomial_probs(num_trials, success_prob, success_label="Success", fai
         for idx,item in enumerate(p_powers[k-1]):
             p_powers[k].append(item)
             p_powers[k].append(item+1)
-            # print("Index: ", idx, "Item: ", item, "Looking at list:", p_powers[k - 1], "Current List:", p_powers[k])
 
     ### getting probability values
     probs_dict = {}
