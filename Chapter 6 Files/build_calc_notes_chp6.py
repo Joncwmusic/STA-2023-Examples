@@ -8,13 +8,11 @@ import random
 def build_calculator_notes():
     st.header("How to Probability Distribution on your TI 83 and TI 84")
 
-    st.subheader("Caluclate mean and standard deviation")
+    st.subheader("Calculate mean and standard deviation")
     st.markdown("The steps for calculating mean and standard deviation are the same as calculating mean and standard "
                 "deviation for weighted data which can be found in the chapter 3 notes.")
 
     st.subheader("Calculate Binomial Probabilities (binompdf and binomcdf)")
-    st.markdown("Basically everything you need to know about calculating permutations and combinations.")
-
 
     st.subheader("Step 1")
     step1col1, step1col2 = st.columns(2)
