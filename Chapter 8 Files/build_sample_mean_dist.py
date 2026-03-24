@@ -64,7 +64,12 @@ def build_sample_mean_page():
 
     # building and formatting the page
     st.header("Sampling from a Population")
-    st.markdown("")
+    st.markdown("So let's suppose we're looking at some population data. There's just one problem. It's really "
+                "expensive to get summary statistics of a population. Especially when those populations may have "
+                "hundreds, if not thousands, of subjects to observe and analyze. What a nightmare. This takes us "
+                "right back to the beginning of the course: sampling. But of course, our samples could be wrong. It "
+                "wouldn't exactly be ethical or practical to make massive decisions on behalf of an organization "
+                "without measurably quantifying the potential error.")
 
     col1, col2 = st.columns(2)
     with col1:
@@ -73,20 +78,46 @@ def build_sample_mean_page():
         st.plotly_chart(fig_theory_norm)
 
     st.header("Distribution of a Sample Statistic")
+    st.markdown("Now let's suppose we're trying to estimate the mean of the population above. We might want to gather "
+                "some samples. Not just one sample because that's be too unreliable. What if instead we gathered like "
+                "100 samples from the population and then marked their means?")
 
     st.subheader("Distribution of the Sample Mean")
 
     st.dataframe(samples_df)
     st.dataframe(sample_mean_df)
 
+    st.markdown("Okay that was a lot of work but let's collect all those means and put it into a histogram and see "
+                "what exactly those means look like.")
+
     st.plotly_chart(fig_sample_mean)
 
+    st.markdown("Wowzers! It looks like the means from the sample form a rough bell shape. Neato. As it turns out, the "
+                "distribution of the sample mean being vaguely normal is no coincidence. Spoiler alert, the underlying "
+                "data doesn't have to be normal to see this.")
+
     st.header("What if the Underlying Distribution is Not Normal?")
+
+    st.markdown("This time, I have a bunch of non normal data. If anything it kind of looks like 2 bell curves smashed "
+                "together into a big distribution. Because that's what I did. So what should the distribution of the "
+                "mean actually look like? Well let's repeat our sampling methodology from above and look at the "
+                "distribution of the sample mean.")
+
     st.plotly_chart(fig_nonnormal_pop)
+
+    st.subheader("Non normal samples and averages")
     st.dataframe(nonnorm_sample_df)
     st.dataframe(nonnorm_sample_mean_df)
+
     st.plotly_chart(fig_nonnormal_sample_mean)
+    st.markdown("Would you look at that? It doesn't have two bump like the original data. If anything it looks like "
+                "just another bell curve. That's kind of surprising result and lends itself to one of the most "
+                "important theorems in statistics.")
 
     st.subheader("Central Limit Theorem")
     st.markdown("As it turns out, as your sample size becomes bigger, the distribution of the sample mean for your "
-                "population will approach normality over time.")
+                "population will approach normality over time. And the mean and standard deviation of the sample mean "
+                "can be calculated byt he following:")
+
+    st.markdown(r"$\mu_{\bar{x}} = \mu$")
+    st.markdown(r"$\sigma_{\bar{x}} = \dfrac{\sigma}{\sqrt{n}}$")
