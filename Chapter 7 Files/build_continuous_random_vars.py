@@ -130,13 +130,17 @@ def build_continuous_probability_densities():
 
     st.markdown("That's the neat part, you don't. Instead we ask what is the probability of being within a range of "
                 "values and for uniform distributions finding the probability of a range is as finding: ")
-    st.markdown(r"\dfrac{x_2 - x_1}{\text{length of the Sample Space)}}")
+    st.markdown(r"$\dfrac{x_2 - x_1}{\text{length of the Sample Space}}$")
 
     st.markdown("When I say length of the sample space I just mean to total range of possibilities so in other words: "
-                "between 0 and 5 in this visual example. For other distributions it's much more complicated. For the "
-                "rest of the course we'll primarily be working with **normal distribution.**")
+                "between 0 and 5 in this visual example. So if we want to find the probability of being between "
+                "2 and 3 minutes late given we're guaranteed to be up to 5 minutes late we'd put:")
+    st.markdown(r"$\dfrac{3-2}{5} = \dfrac{1}{5} = 0.2$")
 
     st.plotly_chart(fig_uniform_range, key="with x between x_0 and x_1")
+
+    st.markdown("For other distributions it's much more complicated and relies on calculators and calculus. For the "
+                "rest of the course we'll primarily be working with **normal distribution.**")
 
     st.subheader("Some Other examples of Continuous Distributions")
     st.markdown("The following are examples of continuous distributions. Don't be intimated we don't need to go over "
