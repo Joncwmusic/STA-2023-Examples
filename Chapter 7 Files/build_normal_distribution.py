@@ -203,13 +203,13 @@ def build_normal_distribution():
 
     with col1tail:
         st.plotly_chart(ax_left_tail_ex_1)
-        st.markdown(r"$Pr(Z < 2)$")
-        st.plotly_chart(ax_left_tail_ex_2)
         st.markdown(r"$Pr(Z < -2)$")
+        st.plotly_chart(ax_left_tail_ex_2)
+        st.markdown(r"$Pr(Z < 2)$")
     with col2tail:
         st.plotly_chart(ax_right_tail_ex_1)
-        st.markdown(r"$Pr(Z > 2)$")
-        st.plotly_chart(ax_right_tail_ex_2)
         st.markdown(r"$Pr(Z > -2)$")
+        st.plotly_chart(ax_right_tail_ex_2)
+        st.markdown(r"$Pr(Z > 2)$")
 
 
