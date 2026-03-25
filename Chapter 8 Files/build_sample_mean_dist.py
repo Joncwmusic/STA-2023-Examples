@@ -18,6 +18,15 @@ def build_sample_mean_page():
     nonnormal_dist = [random.choice([round(random.gauss(mu = 155, sigma = 6), 2),
                       round(random.gauss(mu=175, sigma=7), 2)]) for i in range(1000)]
 
+    x_vals = [i*0.02 for i in range(-200, 200)]
+    generic_normal = [normpdf(0, 1,i) for i in x_vals]
+    sample_mean_normal_n36 = [normpdf(0, 1/6,i) for i in x_vals]
+    sample_mean_normal_n100 = [normpdf(0, 1/10,i) for i in x_vals]
+
+    generic_norm_df = pd.DataFrame({"x_vals": x_vals, "y_vals":generic_normal})
+    sample_norm_df_n36 = pd.DataFrame({"x_vals": x_vals, "y_vals": sample_mean_normal_n36})
+    sample_norm_df_n100 = pd.DataFrame({"x_vals": x_vals, "y_vals": sample_mean_normal_n100})
+
     x_values = [40 + i/5 for i in range(600)]
     theory_norm_curve = [2000*normpdf(mu=100, sigma=15, x=i) for i in x_values]
 
@@ -52,15 +61,17 @@ def build_sample_mean_page():
     # building out the graphs and visuals
     fig_normal_pop = px.histogram(normal_pop_df)
     fig_theory_norm = px.line(data_frame=theory_norm_df, x="x", y="normal(x)")
-    fig_theory_norm.add_traces(
-        fig_normal_pop.data[0]
-    )
+    fig_theory_norm.add_traces(fig_normal_pop.data[0])
 
     fig_nonnormal_pop = px.histogram(nonnormal_pop_df)
 
     fig_sample_mean = px.histogram(sample_mean_dict)
 
     fig_nonnormal_sample_mean = px.histogram(nonnorm_sample_mean_dict)
+
+    fig_generic_norm = px.line(data_frame=generic_norm_df, x="x_vals", y="y_vals", title="Standard Normal (n=1)")
+    fig_sample_norm_n36 = px.line(data_frame=sample_norm_df_n36, x="x_vals", y="y_vals", title="n = 36")
+    fig_sample_norm_n100 = px.line(data_frame=sample_norm_df_n100, x="x_vals", y="y_vals", title="n = 100")
 
     # building and formatting the page
     st.header("Sampling from a Population")
@@ -115,9 +126,25 @@ def build_sample_mean_page():
                 "important theorems in statistics.")
 
     st.subheader("Central Limit Theorem")
-    st.markdown("As it turns out, as your sample size becomes bigger, the distribution of the sample mean for your "
-                "population will approach normality over time. And the mean and standard deviation of the sample mean "
-                "can be calculated byt he following:")
 
-    st.markdown(r"$\mu_{\bar{x}} = \mu$")
-    st.markdown(r"$\sigma_{\bar{x}} = \dfrac{\sigma}{\sqrt{n}}$")
+
+    col1CLT, col2CLT = st.columns(2)
+    with col1CLT:
+        st.markdown(" ")
+        st.markdown(" ")
+        st.markdown("As it turns out, as your sample size becomes bigger, the distribution of the sample mean for your "
+                    "population will approach normality over time. And the mean and standard deviation of the sample mean "
+                    "can be calculated by the following:")
+
+        st.markdown(r"$\mu_{\bar{x}} = \mu$")
+        st.markdown(r"$\sigma_{\bar{x}} = \dfrac{\sigma}{\sqrt{n}}$")
+
+        st.markdown("It should be noted that as n gets larger the standard deviation of the distribution of the sample "
+                    "mean should be getting smaller implying a more concentrated distribution of the sample mean. Each "
+                    "of the charts to the right is a standard normal distribution with a standard deviation reflecting "
+                    "the sample size.")
+    with col2CLT:
+        st.plotly_chart(figure_or_data=fig_generic_norm, height=300)
+        st.plotly_chart(figure_or_data=fig_sample_norm_n36, height=300)
+        st.plotly_chart(figure_or_data=fig_sample_norm_n100, height=300)
+

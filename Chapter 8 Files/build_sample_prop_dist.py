@@ -25,15 +25,23 @@ def build_sample_prop_page():
 
     st.header("Distribution of a Sample Proportion")
 
+    st.markdown("So now that we've made the corrections")
+
     st.dataframe(sample_prop_df)
     st.dataframe(sample_prop_mean_df)
     st.plotly_chart(fig_sample_prop)
 
     st.subheader("Can we assume normality?")
+
+    st.markdown("A good question one might ask is if the distribution of the sample proportion is in any way shape or "
+                "form considered normal just like the mean. As it turns out... yes. But under the following condition:")
     st.markdown("$np(1-p) \geq 10$")
+    st.markdown("So as long as the product of the proportion, its compliment, and the sample size is greater than 10 "
+                "we can more or less assume the sample proportions will be normally distributed.")
 
     st.subheader("Mean and Standard Deviation of the sample proportion")
-
+    st.markdown("The next natural question is what are the mean and standard deviation of the distribution for the "
+                "sample proportion? Turns out the formulas are:")
     st.markdown(r"$\mu_{\hat{p}} = p$")
     st.markdown(r"$\sigma_{\hat{p}} = \sqrt{\dfrac{p(1-p)}{n}}$")
 
@@ -45,7 +53,9 @@ def build_sample_prop_page():
         st.subheader(r"Sample Mean $\mu$ and $\sigma$")
         st.markdown(r"$\mu_{\bar{x}} = \mu$")
         st.markdown(r"$\sigma_{\bar{x}} = \dfrac{\sigma}{\sqrt{n}}$")
+        st.markdown(r"Normal enough if $n>30$")
     with col2:
         st.subheader(r"Sample Prop. $\mu$ and $\sigma$")
         st.markdown(r"$\mu_{\hat{p}} = p$")
         st.markdown(r"$\sigma_{\hat{p}} = \sqrt{\dfrac{p(1-p)}{n}}$")
+        st.markdown(r"Normal enough if $np(1-p) \geq 10$")
