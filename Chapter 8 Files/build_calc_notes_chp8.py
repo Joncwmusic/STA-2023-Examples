@@ -52,12 +52,13 @@ def build_calculator_notes():
     fig_normal.add_shape(type="line", x0=1, y0=0,
                                 x1=1, y1=0.24, line=dict(color="Red", width=2, dash="dot"))
 
-    st.header("How to Probability Distribution on your TI 83 and TI 84")
+    st.header("How to Sample Distribution on your TI 83 and TI 84")
 
     st.subheader("Calculate Area under a bell curve:")
-    st.markdown("A lot of questions will ask you to find $Pr(X < x_0)$ which corresponds to the area under the curve "
-                r"to the left of this $x_0$ value. The function you'll use in your calculator is `normalcdf()` "
-                r"which takes 4 inputs, namely: a Lower Bound, Upper Bound, Mean, and Standard Deviation.")
+    st.markdown(r"A lot of questions will ask you to find $Pr(\bar{x} < x_0)$ which is the area under the curve for the"
+                r" distribution of the sample mean (to the left of $x_0$). The function you'll use in your calculator "
+                r"is `normalcdf()`which takes 4 inputs, namely: a Lower Bound, Upper Bound, Mean, and Standard "
+                r"Deviation which we'll substitute with standard error ($\sigma_{\hat{p}}$ and $\sigma_{\bar{x}}$).")
 
     st.subheader("Step 1")
     step1col1_area, step1col2_area = st.columns(2)

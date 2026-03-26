@@ -21,10 +21,7 @@ tab1, tab2, tab3= st.tabs(["Distribution of the Sample Mean", "Distribution of S
 with tab1:
         bsmd.build_sample_mean_page()
 with tab2:
-    try:
         bspd.build_sample_prop_page()
-    except:
-        st.markdown("Sorry, your page is in another castle.")
 with tab3:
     try:
         bcn8.build_calculator_notes()
