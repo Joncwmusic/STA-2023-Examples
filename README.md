@@ -27,7 +27,11 @@ This is loosely based off of the text Fundamentals of Statistics: Informed Decis
 
 ### Chapter 7: Normal Distribution
 
+[Chapter 7 Streamlit Page](https://sta-2023-examples-chapter-7.streamlit.app/)
+
 ### Chapter 8: Sampling Distributions and Bootstrapping
+
+[Chapter 8 Streamlit Page](https://sta-2023-examples-chapter-8.streamlit.app/)
 
 ### Chapter 9: Estimating Parameters
 
