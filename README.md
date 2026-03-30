@@ -35,6 +35,8 @@ This is loosely based off of the text Fundamentals of Statistics: Informed Decis
 
 ### Chapter 9: Estimating Parameters
 
+[Chapter 9 Streamlit Page](https://sta-2023-examples-chapter-9.streamlit.app/)
+
 ### Chapter 10: Hypothesis Testing
 
 ### Chapter 11: Inferences with 2 samples
