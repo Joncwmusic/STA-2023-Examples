@@ -229,8 +229,8 @@ def build_confidence_interval_mean():
                 "get the minimum sample size. Luckily we can reverse engineer our confidence interval formulas to get "
                 "the minimum sample size formulas:")
 
-    st.markdown(r"$n = \bigg(\dfrac{z_{\alpha/2} \cdot \sigma}{E}\bigg)^2 \hspace{30pt}$"
-                r"$n = \bigg(\dfrac{t_{\alpha/2} \cdot s}{E}\bigg)^2$")
+    st.markdown(r"$n = \bigg(\dfrac{z_{\alpha/2} \cdot \sigma}{E}\bigg)^2 \hspace{30pt}"
+                r" n = \bigg(\dfrac{t_{\alpha/2} \cdot s}{E}\bigg)^2$")
 
     st.markdown(r"Now seeing as in order to properly use t we need to use the sample size which is what we're looking "
                 r"for, we can default to using only the z version with a sample standard deviation.")
