@@ -89,9 +89,9 @@ def t_distribution(x, df):
     exponent_part_2 = -(df + 1) / 2
     part_1 = numerator_part_1 / denominator_part_1
     part_2 = base_part_2 ** exponent_part_2
-    print(numerator_part_1, denominator_part_1, " Divide these to get: ", part_1)
-    print(base_part_2, exponent_part_2, " Raise to the power to get: ", part_2)
-    print("Current_Values, (" + str(x) + "," + str(part_1 * part_2) + ")")
+    # print(numerator_part_1, denominator_part_1, " Divide these to get: ", part_1)
+    # print(base_part_2, exponent_part_2, " Raise to the power to get: ", part_2)
+    # print("Current_Values, (" + str(x) + "," + str(part_1 * part_2) + ")")
     return part_1 * part_2
 
 

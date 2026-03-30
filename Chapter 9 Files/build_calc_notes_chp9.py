@@ -48,7 +48,9 @@ def build_calculator_notes():
     st.subheader("Step 1")
     col1step1_z, col2step1_z = st.columns(2)
     with col1step1_z:
-        st.markdown("content")
+        st.markdown(r"Press *STAT* then navigate to the **TESTS** you'll see a menu that starts with `Z-Test` (Don't "
+                    r"worry about that option, that's chapter 10). Instead scroll down until you see `ZInterval`.")
+        st.markdown("Once you highlight `ZInterval` press **ENTER** to fill in the necessary parameters.")
     with col2step1_z:
         st.image("screenshots/09 Test Screen.png")
         st.image("screenshots/09 Highlight ZInterval.png")
@@ -56,7 +58,14 @@ def build_calculator_notes():
     st.subheader("Step 2")
     col1step2_z, col2step2_z = st.columns(2)
     with col1step2_z:
-        st.markdown("content")
+        st.markdown("There are two options to inputting your parameters:")
+        st.markdown(r"""
+        * You can enter $\bar{x}$ and $\sigma$ directly along with sample size and confidence level. If you're not given
+        a confidence level in your problem, assume the confidence level is 95%.
+        * You can input the data from a sample into L_1 and it will calculate $\bar{x}$ for you, when constructing the 
+        confidence interval but you still have to provide your own $\sigma$ since it is based on population. Otherwise, 
+        use the TInterval Option Outlined below.
+        """)
     with col2step2_z:
         st.image("screenshots/09 Default ZInterval Screen.png")
         st.image("screenshots/09 Default ZInterval Screen - Data.png")
@@ -64,9 +73,10 @@ def build_calculator_notes():
     st.subheader("Step 3")
     col1step3_z, col2step3_z = st.columns(2)
     with col1step3_z:
-        st.markdown("content")
+        st.markdown(r"Now it's just a matter of pressing **Calculate** and you will see a screen with your lower bound "
+                    r"and upper bound in parentheses as well as your $\bar{x}$ and $n$")
     with col2step3_z:
-        st.image("screenshots/09 TInterval result screen.png")
+        st.image("screenshots/09 ZInterval Result.png")
 
     # T TEST
     st.header("How to get a Confidence Interval: `TInterval`")
@@ -75,14 +85,22 @@ def build_calculator_notes():
     st.subheader("Step 1")
     col1step1_t, col2step1_t = st.columns(2)
     with col1step1_t:
-        st.markdown("content")
+        st.markdown(r"Press *STAT* then navigate to the **TESTS** and scroll down until you see `TInterval`.")
+        st.markdown("Once you highlight `TInterval` press **ENTER** to fill in the necessary parameters.")
     with col2step1_t:
         st.image("screenshots/09 Highlight TInterval.png")
 
     st.subheader("Step 2")
     col1step2_t, col2step2_t = st.columns(2)
     with col1step2_t:
-        st.markdown("content")
+        st.markdown("Once again there are two options to inputting your parameters:")
+        st.markdown(r"""
+                * You can enter $\bar{x}$ and $s$, the sample standard deviation, along with sample size and confidence 
+                level. If you're not given a confidence level in your problem, assume the confidence level is 95%.
+                * You can input the data from a sample into L_1 and it will calculate $\bar{x}$ for you, when constructing the 
+                confidence interval but you still have to provide your own $\sigma$ since it is based on population. Otherwise, 
+                use the TInterval Option Outlined below.
+                """)
     with col2step2_t:
         st.image("screenshots/09 Default TInterval Screen Stats.png")
         st.image("screenshots/09 Default TInterval Screen - Data.png")
@@ -90,23 +108,26 @@ def build_calculator_notes():
     st.subheader("Step 3")
     col1step3_t, col2step3_t = st.columns(2)
     with col1step3_t:
-        st.markdown("content")
+        st.markdown("When you press calculate you should see an interval just like with `ZInterval` which shows "
+                    "the mean, sample standard deviation, and the sample size.")
     with col2step3_t:
-        st.image("screenshots/09 ZInterval Result.png")
+        st.image("screenshots/09 TInterval result screen.png")
 
     # 1 PROP Z TEST
     st.header("How to get a Confidence Interval for a Proportion `1-PropZTest`")
     st.subheader("Step 1")
     col1step1_p, col2step1_p = st.columns(2)
     with col1step1_p:
-        st.markdown("content")
+        st.markdown(r"Press *STAT* then navigate to the **TESTS** and scroll down until you see `1-PropZTest`.")
+        st.markdown("Once you highlight `1-PropZTest` press **ENTER** to fill in the necessary parameters.")
     with col2step1_p:
         st.image("screenshots/09 Highlight 1-PropZInt.png")
 
     st.subheader("Step 2")
     col1step2_p, col2step2_p = st.columns(2)
     with col1step2_p:
-        st.markdown("content")
+        st.markdown("In this case you NEED an $x$ and $n$. Remember $n$ is the sample size and $x$"
+                    "is the number of 'successes' so to speak for your proportion. Then fill out the Confidence Level.")
     with col2step2_p:
         st.image("screenshots/09 Default 1-PropZInt Screen.png")
         st.image("screenshots/09 Popped 1-PropZInt.png")
@@ -114,6 +135,7 @@ def build_calculator_notes():
     st.subheader("Step 3")
     col1step3_p, col2step3_p = st.columns(2)
     with col1step3_p:
-        st.markdown("content")
+        st.markdown("When you press calculate you should see an interval just like with `ZInterval`  and `TInterval` "
+                    "which shows the proportion estimate and the sample size.")
     with col2step3_p:
         st.image("screenshots/09 1-PropZInt Result.png")

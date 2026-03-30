@@ -89,9 +89,9 @@ def t_distribution(x, df):
     exponent_part_2 = -(df+1)/2
     part_1 = numerator_part_1/denominator_part_1
     part_2 = base_part_2**exponent_part_2
-    print(numerator_part_1, denominator_part_1, " Divide these to get: ", part_1)
-    print(base_part_2, exponent_part_2, " Raise to the power to get: ", part_2)
-    print("Current_Values, (" + str(x) + "," + str(part_1*part_2) + ")")
+    # print(numerator_part_1, denominator_part_1, " Divide these to get: ", part_1)
+    # print(base_part_2, exponent_part_2, " Raise to the power to get: ", part_2)
+    # print("Current_Values, (" + str(x) + "," + str(part_1*part_2) + ")")
     return part_1*part_2
 
 
@@ -146,7 +146,8 @@ def confidence_interval_calculator_mean(sd, xbar, n, data=None, confidence = 0.9
         raise ValueError("options are limited to T, Z, or data")
 
 
-def confidence_interval_calculator_proportion(x=None, n=None, prop=None, confidence = 0.95):
+def confidence_interval_calculator_proportion(n=100, prop=0.5, confidence = 0.95):
+    p_hat = prop
     error = invNorm(confidence) * math.sqrt(p_hat*(1-p_hat)/n)
     lower = p_hat - error
     upper = p_hat + error
@@ -157,6 +158,9 @@ def find_min_sample_size(error, sd, confidence = 0.95):
     sample_size = (invNorm(area=confidence, mu=0, sigma=1)*sd/error)**2
     return math.ceil(sample_size)
 
+def find_min_sample_size_prop(error, confidence = 0.95, p_hat = 0.5):
+    sample_size = p_hat*(1-p_hat)*(invNorm(area=confidence, mu=0, sigma=1)/error)**2
+    return math.ceil(sample_size)
 
 def build_confidence_inteval_prop():
     x_vals = [i/20 for i in range(-100, 100)]
@@ -180,63 +184,33 @@ def build_confidence_inteval_prop():
 
     fig_all_dist = px.line(data_frame=all_dist_df, x="x_vals", y="y_vals", color = "dist")
 
-    st.header("Confidence Level and Significance Level")
-    st.markdown("Confidence Level is essentially the probability your method of estimation (in this case a confidence "
-                "interval) contains the true parameter you are trying to estimate. With every confidence level is "
-                "a corresponding significance level alpha which is the complement hence:")
+    st.header("Confidence Interval and Error for a Proportion")
 
-    st.markdown(r"""
-        * 99% confidence $\Rightarrow \alpha$ = 0.01
-        * 95% confidence $\Rightarrow \alpha$ = 0.05
-        * 90% confidence $\Rightarrow \alpha$ = 0.10
-    """)
+    st.markdown("So instead of a Mean, we can estimate a proportion instead with a confidence interval. You see this "
+                "all of the time with political polling showing 56% approval with a 3% margin of error. The formula "
+                "for the confidence interval is very similar to that of the mean we just use the standard error "
+                "for the proportion instead.")
+    st.markdown(r"$\mu_{\hat{p}} = p \hspace{30pt} \sigma_{\hat{p}} = \sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}}$")
+    st.markdown(r"So naturally like our mean confidence interval it should look like this:")
 
-    st.header("Estimating a Mean with a Confidence Interval")
+    st.markdown(r"$\hat{p}-z_{\alpha /2}\sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}} < p < "
+                r"\hat{p}+z_{\alpha /2}\sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}}$")
 
-    st.markdown("So once you have a confidence level how does that necessarily translate to an interval estimate? "
-                "Well let's think about the distribution of the sample mean:")
-    st.markdown(r"$\mu_{\bar{x}} = \mu \hspace{30pt} \sigma_{\bar{x}} = \dfrac{\sigma}{\sqrt{n}}$")
-    st.markdown(r"You can look at the confidence level and think of that as the probability a particular sample "
-                r"is within a certain range to the true mean you're trying to estimate. Well 95% corresponds to ~2 "
-                r"standard deviations based on the empirical rule. So, if we get a z score based on our alpha value, "
-                r"and then multiply by the standard error. We should be 95% confident our interval captures the true "
-                r"mean.")
+    st.markdown(r"This also means our error margin is just the part after the $\hat{p}$")
 
-    st.markdown(r"$\bar{x}-z_{\alpha /2}\dfrac{\sigma}{\sqrt{n}}<\mu<\bar{x}+z_{\alpha /2}\dfrac{\sigma}{\sqrt{n}}$")
-
-    st.markdown("The reason we cut alpha in half is because we don't want a one sided interval so we're capturing the "
-                "center 95% instead of just excluding one tail and that's the confidence interval. End of story... or "
-                "is it?")
-
-    st.markdown("Small Problem: sigma is based on the population so you need to use s, the sample standard deviation "
-                "to get your Confidence Interval from your sample.")
-
-    st.markdown(r"$\bar{x}-z_{\alpha /2}\dfrac{s}{\sqrt{n}}<\mu<\bar{x}+z_{\alpha /2}\dfrac{s}{\sqrt{n}}$")
-
-    st.markdown("Second Problem: If you have a small sample (n<30), you need to use the t distribution instead of "
-                "the normal distribution.")
-
-    st.markdown(r"$\bar{x}-t_{\alpha /2}\dfrac{s}{\sqrt{n}}<\mu<\bar{x}+t_{\alpha /2}\dfrac{s}{\sqrt{n}}$")
-
-    st.header("Margin of Error")
-    st.markdown("If you're not actually worried about the mean and instead you're focused on the part you add and "
-                "subtract, that is the margin of error.")
-    st.markdown(r"$E = z_{\alpha /2}\dfrac{\sigma}{\sqrt{n}}$  (provided we know $\sigma$ and n> 30)")
-    st.markdown(r"$E = t_{\alpha /2}\dfrac{s}{\sqrt{n}}$")
+    st.markdown(r"$E = z_{\alpha /2}\sqrt{\dfrac{\hat{p}(1-\hat{p})}{n}}$")
 
     st.header("Minimum Sample Size")
-    st.markdown("If we have a desired margin of error and ideal confidence interval to ensure we're getting the right "
-                "sample size to even measure a population parameter like mean, it'd be a good idea to have a way to "
-                "get the minimum sample size. Luckily we can reverse engineer our confidence interval formulas to get "
-                "the minimum sample size formulas:")
+    st.markdown("If we have a desired margin of error and ideal confidence level, to ensure we're getting the right "
+                "sample size to even measure a population proportion, it'd be a good idea to have a way to figure out"
+                "what the minimum sample size is. If we rearrange our confidence interval formula we can get "
+                "the minimum sample size formula for a proportion:")
 
-    st.markdown(r"$n = \bigg(\dfrac{z_{\alpha/2} \cdot \sigma}{E}\bigg)^2$")
-    st.markdown(r"$n = \bigg(\dfrac{t_{\alpha/2} \cdot s}{E}\bigg)^2$")
+    st.markdown(r"$n = \hat{p}(1-\hat{p})\bigg(\dfrac{z_{\alpha/2}}{E}\bigg)^2$")
 
-    st.markdown(r"Now seeing as in order to properly use t we need to use the sample size which is what we're looking "
-                r"for, we can default to using only the z version with a sample standard deviation.")
-
-    st.markdown(r"$n = \bigg(\dfrac{z_{\alpha/2} \cdot s}{E}\bigg)^2$")
+    st.markdown(r"Note that if an estimate of $\hat{p}$ isn't given, you can't get it because you don't have an $n$. "
+                r"That's the part we're looking for. In this case use $\hat{p}$=0.5 as your estimate to maximize the "
+                r"sample size.")
 
     st.header("Now You Try")
 
@@ -249,15 +223,21 @@ def build_confidence_inteval_prop():
                                            , max_value=0.999, key="prop_error_phat")
         sample_size_user = st.number_input(label="Put in sample size:", value=30, min_value=1, max_value=1000
                                            , key="prop_error_n")
-        lower_bound, upper_bound, error = confidence_interval_calculator_proportion(confidence=conf_level_user)
+        lower_bound, upper_bound, error = confidence_interval_calculator_proportion(confidence=conf_level_user
+                                                                                    , prop=sample_prop_user
+                                                                                    , n=sample_size_user)
         st.markdown("We are " + str(conf_level_user*100) + "% confident that the population mean falls between "
                     + str(round(lower_bound, 2)) + " and " + str(round(upper_bound, 2)) + " with our point estimate "
-                    + str(sample_prop_user) + " and error margin " + str(round(error, 2)) + ".")
+                    + str(sample_prop_user) + " and error margin " + str(error) + ".")
 
     with col2:
         st.subheader("Find Min Sample Size")
-        conf_level_user = st.number_input(label="Put in a confidence level:", value=.95, min_value=.8, max_value=.999)
-        error_user = st.number_input(label="Put in the margin of error:", value=0.5, min_value=0.001)
-        sample_size_user = find_min_sample_size(confidence=conf_level_user, sd=standard_dev_user, error=error_user)
+        conf_level_user = st.number_input(label="Put in a confidence level:", value=.95, min_value=.8, max_value=.999
+                                          ,key = "min_sample_prop_CL")
+        error_user = st.number_input(label="Put in the margin of error:", value=0.5, min_value=0.001
+                                     ,key="min_sample_prop_error")
+        p_hat_user = st.number_input(label="Put in a sample proportion:", value = 0.5, min_value=0.001, max_value=0.999
+                                     ,key = "min_sample_prop_phat")
+        sample_size_result = find_min_sample_size_prop(confidence=conf_level_user, error=error_user, p_hat=p_hat_user)
         st.markdown("The minimum sample size needed with " + str(conf_level_user) + "% confidence and a "
-                    + str(error_user) + " margin of error is " + str(sample_size_user) + ".")
+                    + str(error_user) + " margin of error is " + str(sample_size_result) + ".")

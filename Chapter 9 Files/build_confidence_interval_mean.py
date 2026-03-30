@@ -89,9 +89,9 @@ def t_distribution(x, df):
     exponent_part_2 = -(df+1)/2
     part_1 = numerator_part_1/denominator_part_1
     part_2 = base_part_2**exponent_part_2
-    print(numerator_part_1, denominator_part_1, " Divide these to get: ", part_1)
-    print(base_part_2, exponent_part_2, " Raise to the power to get: ", part_2)
-    print("Current_Values, (" + str(x) + "," + str(part_1*part_2) + ")")
+    # print(numerator_part_1, denominator_part_1, " Divide these to get: ", part_1)
+    # print(base_part_2, exponent_part_2, " Raise to the power to get: ", part_2)
+    # print("Current_Values, (" + str(x) + "," + str(part_1*part_2) + ")")
     return part_1*part_2
 
 
@@ -224,13 +224,13 @@ def build_confidence_interval_mean():
     st.markdown(r"$E = t_{\alpha /2}\dfrac{s}{\sqrt{n}}$")
 
     st.header("Minimum Sample Size")
-    st.markdown("If we have a desired margin of error and ideal confidence interval to ensure we're getting the right "
+    st.markdown("If we have a desired margin of error and ideal confidence level, to ensure we're getting the right "
                 "sample size to even measure a population parameter like mean, it'd be a good idea to have a way to "
                 "get the minimum sample size. Luckily we can reverse engineer our confidence interval formulas to get "
                 "the minimum sample size formulas:")
 
-    st.markdown(r"$n = \bigg(\dfrac{z_{\alpha/2} \cdot \sigma}{E}\bigg)^2$")
-    st.markdown(r"$n = \bigg(\dfrac{t_{\alpha/2} \cdot s}{E}\bigg)^2$")
+    st.markdown(r"$n = \bigg(\dfrac{z_{\alpha/2} \cdot \sigma}{E}\bigg)^2 \hspace{30pt}$"
+                r"$n = \bigg(\dfrac{t_{\alpha/2} \cdot s}{E}\bigg)^2$")
 
     st.markdown(r"Now seeing as in order to properly use t we need to use the sample size which is what we're looking "
                 r"for, we can default to using only the z version with a sample standard deviation.")
@@ -265,7 +265,7 @@ def build_confidence_interval_mean():
                                             , key="min_sample_DS")
         error_user = st.number_input(label="Put in the margin of error:", value=0.5, min_value=0.001
                                      , key="min_sample_E")
-        sample_size_user = find_min_sample_size(confidence=conf_level_user, sd=standard_dev_user, error=error_user)
+        sample_size_result = find_min_sample_size(confidence=conf_level_user, sd=standard_dev_user, error=error_user)
         st.markdown("The minimum sample size needed with " + str(conf_level_user) + "% confidence and a "
-                    + str(error_user) + " margin of error is " + str(sample_size_user) + ".")
+                    + str(error_user) + " margin of error is " + str(sample_size_result) + ".")
 
