@@ -34,9 +34,6 @@ def show_dual_histogram(data_list_1, data_list_2):
     return None
 
 
-
-
-
 ##### tests
 sample_with_replacement = get_random_sample_with_replacement(test_score_list, 50)
 sample_without_replacement = get_random_sample_without_replacement(test_score_list, 50)
