@@ -42,100 +42,94 @@ def exp_distribution(rate_param, x):
 
 
 def build_calculator_notes():
-    st.header("How to get a Confidence Interval: `ZInterval`")
-    st.markdown("- You know the population standard deviation")
-    st.markdown("- The sample size is greater than 30 (can be less than 30 if the underlying distribution is normal)")
-    st.subheader("Step 1")
-    col1step1_z, col2step1_z = st.columns(2)
-    with col1step1_z:
-        st.markdown(r"Press *STAT* then navigate to the **TESTS** you'll see a menu that starts with `Z-Test` (Don't "
-                    r"worry about that option, that's chapter 10). Instead scroll down until you see `ZInterval`.")
-        st.markdown("Once you highlight `ZInterval` press **ENTER** to fill in the necessary parameters.")
-    with col2step1_z:
-        st.image("screenshots/09 Test Screen.png")
-        st.image("screenshots/09 Highlight ZInterval.png")
-
-    st.subheader("Step 2")
-    col1step2_z, col2step2_z = st.columns(2)
-    with col1step2_z:
-        st.markdown("There are two options to inputting your parameters:")
-        st.markdown(r"""
-        * You can enter $\bar{x}$ and $\sigma$ directly along with sample size and confidence level. If you're not given
-        a confidence level in your problem, assume the confidence level is 95%.
-        * You can input the data from a sample into L_1 and it will calculate $\bar{x}$ for you, when constructing the 
-        confidence interval but you still have to provide your own $\sigma$ since it is based on population. Otherwise, 
-        use the TInterval Option Outlined below.
-        """)
-    with col2step2_z:
-        st.image("screenshots/09 Default ZInterval Screen.png")
-        st.image("screenshots/09 Default ZInterval Screen - Data.png")
-
-    st.subheader("Step 3")
-    col1step3_z, col2step3_z = st.columns(2)
-    with col1step3_z:
-        st.markdown(r"Now it's just a matter of pressing **Calculate** and you will see a screen with your lower bound "
-                    r"and upper bound in parentheses as well as your $\bar{x}$ and $n$")
-    with col2step3_z:
-        st.image("screenshots/09 ZInterval Result.png")
-
     # T TEST
-    st.header("How to get a Confidence Interval: `TInterval`")
+    st.header("How to Hypothesis Test: `T-Test` vs. `Z-Test`")
+    st.markdown("You use `T-Test` when:")
     st.markdown("- You don't know the population standard deviation and instead have the sample standard deviation.")
     st.markdown("- The sample size is less than 30.")
+    st.markdown("you should take note if the sample size is greater than 30 the t-distribution is 'effectively' the "
+                "normal distribution and you can use `Z-Test` in this circumstance, but when in doubt use `T-Test`")
+
     st.subheader("Step 1")
     col1step1_t, col2step1_t = st.columns(2)
     with col1step1_t:
-        st.markdown(r"Press *STAT* then navigate to the **TESTS** and scroll down until you see `TInterval`.")
-        st.markdown("Once you highlight `TInterval` press **ENTER** to fill in the necessary parameters.")
+        st.markdown(r"Press *STAT* then navigate to the **TESTS** menu and you'll see `Z-Test` and `T-Test`.")
+        st.markdown("Highlight `T-Test` press **ENTER** to fill in the necessary parameters.")
     with col2step1_t:
-        st.image("screenshots/09 Highlight TInterval.png")
+        st.image("screenshots/10 Tests Screen.png")
 
     st.subheader("Step 2")
     col1step2_t, col2step2_t = st.columns(2)
     with col1step2_t:
-        st.markdown("Once again there are two options to inputting your parameters:")
+        st.markdown("There are two options for inputting your parameters:")
         st.markdown(r"""
-                * You can enter $\bar{x}$ and $s$, the sample standard deviation, along with sample size and confidence 
-                level. If you're not given a confidence level in your problem, assume the confidence level is 95%.
-                * You can input the data from a sample into L_1 and it will calculate $\bar{x}$ for you, when constructing the 
-                confidence interval but you still have to provide your own $\sigma$ since it is based on population. Otherwise, 
-                use the TInterval Option Outlined below.
+                * For the Stats input you fill in:
+                    * The assumed mean the null hypothesis is asserting $\mu_{0}$
+                    * The sample mean $\bar{x}$ from your sample
+                    * The sample standard deviation: `Sx
+                    * The sample size: `n`
+                    * Lastly, the type of test:
+                        * 2Tail: $ \neq \mu_0$
+                        * Left Tail: $ <\mu_0$
+                        * Right: Tail $ > \mu_0$
+                    """)
+                        
+        st.markdown(r"""
+                * For the Data Input you need to fill in:
+                    * The assumed mean the null hypothesis is asserting $\mu_{0}$
+                    * `List` for the list holding your data
+                    * The Frequency List (for weighted data) for us, we can default this to 1
+                    * Then, the type of test:
+                        * 2Tail: $ \neq \mu_0$
+                        * Left Tail: $ <\mu_0$
+                        * Right: Tail $ > \mu_0$)
                 """)
     with col2step2_t:
-        st.image("screenshots/09 Default TInterval Screen Stats.png")
-        st.image("screenshots/09 Default TInterval Screen - Data.png")
+        st.subheader("Stats Input")
+        st.image("screenshots/10 T-Test Stats Input Blank.png")
+        st.image("screenshots/10 T-Test Stats Input Popped.png")
+        st.subheader("Data Input")
+        st.image("screenshots/10 T-Test Data Input Blank.png")
 
     st.subheader("Step 3")
     col1step3_t, col2step3_t = st.columns(2)
     with col1step3_t:
-        st.markdown("When you press calculate you should see an interval just like with `ZInterval` which shows "
-                    "the mean, sample standard deviation, and the sample size.")
+        st.markdown(r" When you press calculate you should see a screen that has the critical value `t`, the p value, "
+                    r"`p`, and summary statistics $\bar{x}$, `Sx`, and `n` respectively.")
     with col2step3_t:
-        st.image("screenshots/09 TInterval result screen.png")
+        st.image("screenshots/10 T-Test Result Screen.png")
 
     # 1 PROP Z TEST
-    st.header("How to get a Confidence Interval for a Proportion `1-PropZTest`")
+    st.header("Hyp. Test for Proportions: `1-PropZTest`")
     st.subheader("Step 1")
     col1step1_p, col2step1_p = st.columns(2)
     with col1step1_p:
-        st.markdown(r"Press *STAT* then navigate to the **TESTS** and scroll down until you see `1-PropZTest`.")
-        st.markdown("Once you highlight `1-PropZTest` press **ENTER** to fill in the necessary parameters.")
+        st.markdown(r"Press *STAT* then navigate to the **TESTS** menu and you'll see `1-PropZTest`.")
+        st.markdown("Highlight `1-PropZTest` press **ENTER** to fill in the necessary parameters.")
     with col2step1_p:
-        st.image("screenshots/09 Highlight 1-PropZInt.png")
+        st.image("screenshots/10 Tests Screen.png")
 
     st.subheader("Step 2")
     col1step2_p, col2step2_p = st.columns(2)
     with col1step2_p:
-        st.markdown("In this case you NEED an $x$ and $n$. Remember $n$ is the sample size and $x$"
-                    "is the number of 'successes' so to speak for your proportion. Then fill out the Confidence Level.")
+        st.markdown(r"""
+                        * For the input you will need to fill in:
+                            * The assumed proportion the null hypothesis is asserting $p_{0}$
+                            * The number of successes or 'yes votes' in your proportion.
+                            * The sample size: `n`
+                            * Lastly, the type of test:
+                                * 2Tail: $ \neq p_0$
+                                * Left Tail: $ < p_0$
+                                * Right: Tail $ > p_0$
+                            """)
     with col2step2_p:
-        st.image("screenshots/09 Default 1-PropZInt Screen.png")
-        st.image("screenshots/09 Popped 1-PropZInt.png")
+        st.image("screenshots/10 1-PropZTest Input Blank.png")
+        st.image("screenshots/10 1-PropZTest Input Popped.png")
 
     st.subheader("Step 3")
     col1step3_p, col2step3_p = st.columns(2)
     with col1step3_p:
-        st.markdown("When you press calculate you should see an interval just like with `ZInterval`  and `TInterval` "
-                    "which shows the proportion estimate and the sample size.")
+        st.markdown(r" When you press calculate you should see a screen that has the critical value `z`, the p value, "
+                    r"`p`, and summary statistics $\hat{p}$ and `n` respectively.")
     with col2step3_p:
-        st.image("screenshots/09 1-PropZInt Result.png")
+        st.image("screenshots/10 1-PropZTest Result.png")

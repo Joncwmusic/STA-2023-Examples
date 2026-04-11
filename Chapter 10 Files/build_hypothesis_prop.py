@@ -65,7 +65,7 @@ def build_hypothesis_prop():
                                      , y=normal_both_tail_df['y_val']
                                      , fill='tozeroy', showlegend=False)
 
-    st.header("Hypothesis Testing for a Mean")
+    st.header("Hypothesis Testing for a Proportion")
     st.markdown("When testing a hypothesis on the population proportion, the idea is assuming the null hypothesis $H_0$"
                 " is true, then getting a proportion from a random sample. The rest is determining how likely "
                 "getting the proportion for you sample is if the null is in fact true. If that probability is low, "
@@ -134,7 +134,7 @@ def build_hypothesis_prop():
         st.markdown(r"""
         One Tail Critical Value Z Scores:
         
-        - 90% Confidence $z_{\alpha2} = z_{0.1} = 1.28$
+        - 90% Confidence $z_{\alpha} = z_{0.1} = 1.28$
         - 95% Confidence $z_{\alpha} = z_{0.05} = 1.645$
         - 99% Confidence $z_{\alpha} = z_{0.01} = 2.32$
         """)

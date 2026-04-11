@@ -78,7 +78,7 @@ def build_calculator_notes():
     with col2step3_z:
         st.image("screenshots/09 ZInterval Result.png")
 
-    # T TEST
+    # T Interval
     st.header("How to get a Confidence Interval: `TInterval`")
     st.markdown("- You don't know the population standard deviation and instead have the sample standard deviation.")
     st.markdown("- The sample size is less than 30.")
@@ -114,7 +114,7 @@ def build_calculator_notes():
         st.image("screenshots/09 TInterval result screen.png")
 
     # 1 PROP Z TEST
-    st.header("How to get a Confidence Interval for a Proportion `1-PropZTest`")
+    st.header("How to get a Confidence Interval for a Proportion `1-PropZInt`")
     st.subheader("Step 1")
     col1step1_p, col2step1_p = st.columns(2)
     with col1step1_p:
