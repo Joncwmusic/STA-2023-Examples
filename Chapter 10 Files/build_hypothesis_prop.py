@@ -28,16 +28,18 @@ def normpdf(mu, sigma, x):
     return part_1 * part_2
 
 def build_hypothesis_prop():
-    hypothesis_test_outcomes = {
-        "Decision": ["Reject Null","Do Not Reject Null"],
-        "Null is True": ["Type I Error", "Correct"],
-        "Null is Not True": ["Correct", "Type II Error"],
-    }
+
+    sample_vs_pop_prop = {"Ads":["Without Owners", "With Owners"],"Results":[4/100, 56/850]}
+    example_prop_df = sample_vs_pop_prop
+
+    p_hat = 56/850
+    sigma_p_hat = math.sqrt((0.04)*(0.96)/850)
+    test_stat = (p_hat - 0.04)/sigma_p_hat
 
     # normal line data
     x_values_full = [i/50 for i in range(-200, 200)]
     x_values_left = [i / 50 for i in range(-200, -50)]
-    x_values_right = [i / 50 for i in range(50, 200)]
+    x_values_right = [i / 50 for i in range(80, 200)]
 
     normal_full_line = [normpdf(mu=0, sigma=1, x=i) for i in x_values_full]
     normal_left_area = [normpdf(mu=0, sigma=1, x=i) for i in x_values_left]
@@ -53,6 +55,7 @@ def build_hypothesis_prop():
     normal_line_fig_right.add_scatter(x=normal_right_area_df['x_val']
                                      , y=normal_right_area_df['y_val']
                                      , fill='tozeroy', showlegend=False)
+    normal_line_fig_right.add_vline(x=3.85, line_width=2, line_dash="dash", line_color="green")
     normal_line_fig_left = px.line(data_frame=normal_full_line_df, x="x_val", y="y_val")
     normal_line_fig_left.add_scatter(x=normal_left_area_df['x_val']
                                 , y=normal_left_area_df['y_val']
@@ -62,117 +65,102 @@ def build_hypothesis_prop():
                                      , y=normal_both_tail_df['y_val']
                                      , fill='tozeroy', showlegend=False)
 
-    st.header("What is a Hypothesis and How Do We Test It?")
-    st.markdown("A Hypothesis is a statement about a parameter of a population. Some examples include: ")
-    st.markdown(r"""
-    * The average height of all students on a college campus is 68 inches.
-    * The proportion of college educated students that want stricter gun laws is 58%
-    * The average home price in Florida is 439000
-    """)
-    st.markdown("Now you could believe these statements and take them at face value but you're a skeptical researcher "
-                "who wants to verify these facts. The problem is you have no money or resources to collect all of this "
-                "information. What are you to do without the finances to ask every homeowner in florida to get the true"
-                "average?")
-    st.markdown("You *CAN* get a sample. But it won't be perfect. So we then have to *INFER* based on what we collect "
-                "and define a threshold to determine if we should accept the statistical statement or not. Those "
-                "thresholds are based on your sample size and more or less the likelihood of you just getting a bad "
-                "sample if we assume the original statement is true.")
+    st.header("Hypothesis Testing for a Mean")
+    st.markdown("When testing a hypothesis on the population proportion, the idea is assuming the null hypothesis $H_0$"
+                " is true, then getting a proportion from a random sample. The rest is determining how likely "
+                "getting the proportion for you sample is if the null is in fact true. If that probability is low, "
+                "or the z score for your sample prop is way too high or low, you can say 'hmm... it seems impossibly "
+                "unlikely I would get this sample average from the population, maybe I should challenge my assumption "
+                "and reject the $H_0$'")
 
-    st.subheader("The Type of Hypothesis Tests")
-    st.markdown("Every hypothesis is framed around 2 statements. The first is the null hypothesis $H_0$. This is the "
-                "statement you're trying to challenge. You assume this statement is true before collecting and "
-                "analyzing your sample. The second is the alternative hypothesis to challenge the original claim $H_1$."
-                " This will always challenge the null hypothesis depending on the context.")
+    st.markdown("Let's start with an example. Suppose you're launching a new marketing campaign for your 'uggs but for "
+                "dogs' brand and you want to test if ads that include the pets' owners are better than just featuring "
+                "the product itself. So you, with a current benchmark of a 4% click through rate on your ad want to "
+                "know if these new ads will perform substantially better. And when you test these ads on 850 potential "
+                "customers you get 56 that decide to click. Not bad.")
 
-    col1, col2, col3 = st.columns(3)
 
-    with col1:
-        st.markdown("2 Tail Tests")
-        st.markdown(r"$H_0: \mu = \mu_0$")
-        st.markdown(r"$H_1: \mu \neq \mu_0$")
-        st.plotly_chart(normal_line_fig_both)
-    with col2:
-        st.markdown("Left Tail Tests")
-        st.markdown(r"$H_0: \mu = \mu_0$")
-        st.markdown(r"$H_1: \mu < \mu_0$")
-        st.plotly_chart(normal_line_fig_left)
-    with col3:
-        st.markdown("Right Tail Tests")
-        st.markdown(r"$H_0: \mu = \mu_0$")
-        st.markdown(r"$H_1: \mu > \mu_0$")
-        st.plotly_chart(normal_line_fig_right)
+    st.dataframe(example_prop_df)
+    st.markdown("**Current CTR**: " + str(0.040))
+    st.markdown("**New CTR**: " + str(round(56/850, 3)))
+    st.markdown("But now you have an issue. How do you know this wasn't a fluke? This is where the hypothesis testing "
+                "thing we've been talking about comes in handy. Essentially you want to find the probability you could "
+                "get a 6.6% conversion rate or higher assuming it was supposed to be 4% to begin with. (I would like "
+                "to point out here that in practice most companies take the point estimate values and roll with it "
+                "instead of verifying statistical significance even if the sample sizes are super small).")
 
-    st.header("Type I rand Type II Errors")
-    st.markdown("When determining the outcome of a hypothesis test we have 4 options for how to conclude the test:")
+    st.header("Setting Up the Hypothesis Test")
+    st.markdown("First you must determine your hypothesis setup. You start with assuming that your. But "
+                "you're claiming instead that the average is higher that your salary. This mean your null and "
+                "alternative look like this: ")
+    st.markdown(r"$H_0: p = 0.04$")
+    st.markdown(r"$H_1: p > 0.04$")
 
-    st.table(hypothesis_test_outcomes)
+    st.markdown("For the sake of removing doubt let's say we're operating on 95% confidence or a significance level of "
+                "0.05.")
 
-    st.markdown(r"""* We can be correct, which is when we reject the null hypothesis when it is false OR when we don't 
-        reject the null when it is true.
-        * Meanwhile if we reject a true null hypothesis then we have a Type I Error
-        * Likewise if we fail to reject a false null hypothesis we have a Type II Error
-    """)
+    st.markdown("Lastly, let's get the point estimate for the proportion:")
+    st.markdown(r"$\hat{p} = " + str(round(56/850, 4)) + "$")
 
-    st.markdown(r"As it turns out this $\alpha$ value is just the probability of a Type I Error. In other words the "
-                r"significance level is the probability of rejecting a true $H_0$")
-    st.markdown(r"$\alpha = Pr(\text{Type I Error})$")
+    st.header("Getting a Test Statistic")
 
-    st.markdown(r"""
-       One Tail Critical Value Z Scores:
+    st.markdown("The test statistic for the mean is as follows:")
+    st.markdown(r"$z_0 = \dfrac{\hat{p} - p}{\sqrt{\dfrac{p(1-p)}{n}}}$")
+    st.markdown("This may look familiar as it is basically the z score of the sample mean. Now let's plug in all of "
+                "our values:")
+    st.markdown(r"$z_0 = \dfrac{\hat{p} - p}{\sqrt{\dfrac{p(1-p)}{n}}} \Rightarrow \dfrac{0.066 - 0.04}"
+                r"{\sqrt{\dfrac{(0.04)(0.96)}{850}}} = " + str(round(test_stat, 4)) + "$")
 
-       - 90% Confidence $z_{\alpha} = z_{0.1} = 1.28$
-       - 95% Confidence $z_{\alpha} = z_{0.05} = 1.645$
-       - 99% Confidence $z_{\alpha} = z_{0.01} = 2.32$
+    st.header("Classical Approach")
 
-       Two Tail Critical Value Z Scores:
+    st.markdown(r"When using the classical approach you need to compare your test statistic to the critical value. You "
+                r"can find a critical value by using `invNorm(area, 0, 1)` where the area is your alpha For a left tail"
+                r" test use area = alpha, right tail use area = 1-alpha, and for a 2 tail test use alpha/2 and take "
+                r"both the positive and negative values.")
+    st.markdown("NOTE: If you have a TI84+CE then ignore manipulating alpha and just use LEFT and RIGHT. You still "
+                "have to cut alpha in half for 2 tails.")
 
-       - 90% Confidence $z_{\alpha / 2} = z_{0.05} = 1.645$
-       - 95% Confidence $z_{\alpha / 2} = z_{0.025} = 1.96$
-       - 99% Confidence $z_{\alpha / 2} = z_{0.005} = 2.576$
-       """)
+    st.markdown("If you aren't using a computer to do this for you, you can use a z table to get the critical value. "
+                "For a right tail test with alpha = 0.05 the critical value is is ~1.645")
+
+    st.plotly_chart(normal_line_fig_right, key="right tail t")
+
+    st.markdown("**The Key Idea:** If the test statistic is beyond the red boundary based on your critical value, this "
+                "is when you reject the null hypothesis.")
+
+    col1_crit, col2_crit = st.columns(2)
+
+    with col1_crit:
+        st.markdown(r"""
+        One Tail Critical Value Z Scores:
+        
+        - 90% Confidence $z_{\alpha2} = z_{0.1} = 1.28$
+        - 95% Confidence $z_{\alpha} = z_{0.05} = 1.645$
+        - 99% Confidence $z_{\alpha} = z_{0.01} = 2.32$
+        """)
+    with col2_crit:
+        st.markdown(r"""
+        Two Tail Critical Value Z Scores:
+    
+           - 90% Confidence $z_{\alpha / 2} = z_{0.05} = 1.645$
+           - 95% Confidence $z_{\alpha / 2} = z_{0.025} = 1.96$
+           - 99% Confidence $z_{\alpha / 2} = z_{0.005} = 2.576$
+           """)
 
     st.header("P Value Approach")
 
-    st.markdown(r"$t_0 = \dfrac{\bar{x} - \mu}{\dfrac{s}{\sqrt{n}}}$")
+    st.markdown("When using the p value approach you still must compute the test statistic but instead of comparing it "
+                "to a critical value, you can compute the probability of getting that proportion or worse against the "
+                "significance level. So for our example compute $Pr(z>3.85)$ which is `normalcdf(3,85, 10000, 0, 1)` "
+                "remember since this is a z-score that means your mean and standard deviation are 0 and 1. This will "
+                r"give you can absurdly small probability (0.0001) which is far less than our $\alpha$ = 0.05.")
 
-    st.markdown(r"$Pr(t > t_0)$")
-    st.markdown(r"$Pr(t > t_0)$")
-    st.markdown(r"$Pr(t > |t_0|)$")
-
+    st.header("In Summary:")
     st.markdown(r"""
-       Critical Value P Values:
-
-       - 90% Confidence $\alpha = 0.1$
-       - 95% Confidence $\alpha = 0.05$
-       - 99% Confidence $\alpha = 0.01$
-       """)
-
-    st.header("Outlining the Methods:")
-
-    st.subheader("Method 1: The Classical Approach")
-
-    st.markdown(r"""
-        * Identify the null and alternative hypotheses and significance level (default to 0.05 if not given in a problem)
-        * Compute the test statistic $z_0$ i.e. the z score for the sample mean or proportion
-        * Compute $z_\alpha$ AKA the critical value to compare the test statistic to determine if you should reject $H_0$
+        * Define your hypothesis type and get your variables
+        * Get a significance level $\alpha$ or a critical value
+        * Get a test statistic based on your data
+        * Compare:
+            * Compare the test statistic to your critical value OR
+            * Compare the p value of the test statistic to the significance level
         """)
-
-    st.subheader("Method 2: The P Value Approach")
-
-    st.markdown(r"""
-        * Identify the null and alternative hypotheses and significance level (default to 0.05 if not given in a problem)
-        * Compute the test statistic $z_0$ i.e. the z score for the sample mean or proportion
-        * Compute the probability of having your test statistic ($Pr(z>z_0)$, $Pr(z<z_0)$, or $2Pr(z>|z_0|)$ depending
-        on the type of test.
-        """)
-
-    st.subheader("Method 3: Confidence Interval Approach (Only for 2 Tail)")
-
-    st.markdown(r"""
-        * Use the data you have to compute a confidence interval
-        * If the null hypothesis suggests the mean or proportion is outside your confidence interval, then
-        reject the null hypothesis
-        """)
-
-    st.markdown("I'd like to point out that you could use a confidence interval for 1 tail tests BUT we won't be "
-                "covering it in our course as we've only looked at symmetrical confidence intervals.")
