@@ -123,7 +123,7 @@ def build_hypothesis_prop():
     st.markdown("If you aren't using a computer to do this for you, you can use a z table to get the critical value. "
                 "For a right tail test with alpha = 0.05 the critical value is is ~1.645")
 
-    st.plotly_chart(normal_line_fig_right, key="right tail t")
+    st.plotly_chart(normal_line_fig_right, key="right tail z")
 
     st.markdown("**The Key Idea:** If the test statistic is beyond the red boundary based on your critical value, this "
                 "is when you reject the null hypothesis.")
