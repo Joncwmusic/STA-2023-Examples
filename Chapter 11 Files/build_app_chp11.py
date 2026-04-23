@@ -35,12 +35,12 @@ with tab2:
         st.markdown("Your page is in another castle")
 with tab3:
     try:
-        b2smh_dep.build_hypothesis_language()
+        b2smh_dep.build_2_samp_mean_htest_dep()
     except:
         st.markdown("Your page is in another castle")
 with tab4:
     try:
-        b2smh_indep.build_hypothesis_language()
+        b2smh_indep.build_2_samp_mean_htest_indep()
     except:
         st.markdown("Your page is in another castle")
 with tab5:
