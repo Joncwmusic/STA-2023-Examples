@@ -18,29 +18,30 @@ st.set_page_config(
 
 st.title("Chapter 11 Summary")
 
-tab1, tab2, tab3, tab4, tab5 = st.tabs(["1 Sample to 2 Samples"
-                                , "2 Proportions"
+tab1, tab2, tab3, tab4, tab5 = st.tabs(["2 Proportions"
                                 , "2 Means (Dependent)"
                                 , "2 Means (Independent)"
+                                , "1 Sample to 2 Samples"
                                 , "Calculator"])
+
 with tab1:
-    try:
-        bott.build_one_to_two()
-    except:
-        st.markdown("Your page is in another castle")
-with tab2:
     try:
         b2pht.build_2_prop_htest()
     except:
         st.markdown("Your page is in another castle")
-with tab3:
+with tab2:
     try:
         b2smh_dep.build_2_samp_mean_htest_dep()
     except:
         st.markdown("Your page is in another castle")
-with tab4:
+with tab3:
     try:
         b2smh_indep.build_2_samp_mean_htest_indep()
+    except:
+        st.markdown("Your page is in another castle")
+with tab4:
+    try:
+        bott.build_one_to_two()
     except:
         st.markdown("Your page is in another castle")
 with tab5:

@@ -97,7 +97,7 @@ def build_one_to_two():
         st.markdown(r"$H_1: \mu_1 \ne \mu_2$")
 
         st.markdown("**Test Statistic**")
-        st.markdown(r"$t_0 = \dfrac{\bar{x}_1 - \bar{x}_2}{\sqrt{\dfrac{s_1}{n_1} + \dfrac{s_2}{n_2}}}$")
+        st.markdown(r"$t_0 = \dfrac{\bar{x}_1 - \bar{x}_2}{\sqrt{\dfrac{s_1^2}{n_1} + \dfrac{s_2^2}{n_2}}}$")
 
         st.markdown("**Calc Function:** `2-SampTTest`")
 
