@@ -2,7 +2,6 @@ import pandas as pd
 import streamlit as st
 import math
 import random
-import graphviz
 
 def build_one_to_two():
     st.header("The Workflow:")
