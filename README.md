@@ -3,8 +3,6 @@ This is a repository for my statistics course for anyone interested in learning 
 
 This is loosely based off of the text Fundamentals of Statistics: Informed Decisions Using Data by Michael Sullivan, III
 
-### Chapter 1: Getting Data
-
 ### Chapter 2: Summarizing Data Visually
 
 [Chapter 2 Streamlit Page](https://sta-2023-examples-chapter-2.streamlit.app/)
@@ -43,4 +41,4 @@ This is loosely based off of the text Fundamentals of Statistics: Informed Decis
 
 ### Chapter 11: Inferences with 2 samples
 
-### Chapter 12: Goodness to Fit
+[Chapter 11 Streamlit Page](https://sta-2023-examples-chapter-11.streamlit.app/)
